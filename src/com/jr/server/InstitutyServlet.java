@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UserServlet extends HttpServlet {
+public class InstitutyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -21,11 +21,12 @@ public class UserServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.service(req, resp);
     }
-
-    /**
-     * 使用sesson存储用户登录后返回的对象
-     * */
-    protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+/**
+ * 获取金融机构列表
+ * 可将金融机构名称展示在下拉框上，具体看前端代码，
+ * 注：使用ajax技术
+ * */
+    protected void getAllInstituties(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.service(req, resp);
     }
 }

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UserServlet extends HttpServlet {
+public class ReviewrecordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -22,10 +22,5 @@ public class UserServlet extends HttpServlet {
         super.service(req, resp);
     }
 
-    /**
-     * 使用sesson存储用户登录后返回的对象
-     * */
-    protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    }
 }

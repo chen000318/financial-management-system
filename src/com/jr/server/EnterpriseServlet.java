@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UserServlet extends HttpServlet {
+public class EnterpriseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -21,11 +21,16 @@ public class UserServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.service(req, resp);
     }
-
-    /**
-     * 使用sesson存储用户登录后返回的对象
-     * */
-    protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+/**
+ *通过用户传入进来的企业ID获取企业信息，在填入
+ * */
+    protected void getEnterpriseInfoByEnterpriseID(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    }
+/**
+ * 获取企业的全部信息列表
+ * 将列表内企业名称展示在前端下拉框中
+ *
+ * */
+    protected void getAllEnterprise(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     }
 }
