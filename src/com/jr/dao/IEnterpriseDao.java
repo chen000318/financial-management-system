@@ -6,12 +6,17 @@ import java.util.List;
 
 public interface IEnterpriseDao {
     /*
-    * 根据企业id查询企业信息
+    * 根据用户id查询企业信息
     * */
-    public Enterprise queryByid(int id);
+    public Enterprise queryByUid(int uid);
 
     /*
      *查询所有企业名称
      * */
     public List<Enterprise> queryAllEnterpriseNames();
+
+    /**
+     * 通过企业id查询企业信息
+     */
+    public Enterprise queryEnterpriseInfoByid(int id);
 }
