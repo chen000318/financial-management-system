@@ -5,7 +5,7 @@ import java.util.List;
 public class PageHelper<T> {
 
     private int totalCount;//总条数
-    private int pageSize;//总页数
+    private int pageSize;//每页的条数
     private int indexPage;//当前页面
     private int totalPage;//
     private List<T> pageList;

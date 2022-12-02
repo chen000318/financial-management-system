@@ -7,10 +7,10 @@ import java.util.List;
 
 public class EnterpriseBizImpl implements IEnterpriseBiz {
     /*
-     * 通过id获取企业信息
+     * 通过用户id获取企业信息
      * */
     @Override
-    public Enterprise getEnterpriseInfo(int id) {
+    public Enterprise getEnterpriseInfo(int uid) {
         return null;
     }
 
@@ -19,6 +19,14 @@ public class EnterpriseBizImpl implements IEnterpriseBiz {
      * */
     @Override
     public List<Enterprise> getAllEnterpriseNames() {
+        return null;
+    }
+
+    /**
+     * 通过企业id获取企业信息
+     */
+    @Override
+    public Enterprise getEnterpriseInfoByid(int id) {
         return null;
     }
 }
