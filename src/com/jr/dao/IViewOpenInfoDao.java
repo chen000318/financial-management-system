@@ -14,10 +14,10 @@ public interface IViewOpenInfoDao {
     /**
      * 查询当前页的数据信息(所有状态)
      */
-    public List<ViewOpenInfo> queryAllInfoByCurrentPage(PageHelper pageHelper);
+    public List<ViewOpenInfo> queryAllInfoByCurrentPage(PageHelper pageHelper,String str);
 
     /**
      * 查询当前页的复核信息(状态为开单中)
      */
-    public List<ViewOpenInfo> queryAllOnTheBillByCurrentPage(PageHelper pageHelper);
+    public List<ViewOpenInfo> queryAllOnTheBillByCurrentPage(PageHelper pageHelper,String str);
 }

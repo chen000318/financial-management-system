@@ -2,8 +2,10 @@ package com.jr.server;
 
 import com.google.gson.Gson;
 import com.jr.biz.impl.TicketopenBizImpl;
+import com.jr.biz.impl.ViewOpenInfoBizImpl;
 import com.jr.util.PageHelper;
 import com.jr.util.SqlHelper;
+import com.jr.util.ViewOpenInfo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,13 +43,13 @@ public class TicketOpenServlet extends HttpServlet {
      */
     protected void getAllTicketopeninfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //获得客户端输入参数：
-        String voucher=request.getParameter("voucher number");
-        String acquired=request.getParameter("acquired enterprise");
-        String enterprise=request.getParameter("enterprise billing");
-        String billing=request.getParameter("billing date");
-        String divbutton=request.getParameter("divbutton");
-        String minimum=request.getParameter("minimum amount");
-        String maximum=request.getParameter("maximum amount");
+        String voucher=request.getParameter("vouchernumber");
+        String acquired=request.getParameter("acquiredenterprise");
+        String enterprise=request.getParameter("enterprisebilling");
+        String billing=request.getParameter("billingdate");
+        String divbutton=request.getParameter("button");
+        String minimum=request.getParameter("minimum");
+        String maximum=request.getParameter("maximum");
         //使用工具类SqlHelper,将客户传过来的值输入到工具类对象中去：
         SqlHelper sqlHelper=new SqlHelper();
         sqlHelper.setNo(voucher);
@@ -59,9 +61,7 @@ public class TicketOpenServlet extends HttpServlet {
         sqlHelper.setAmountMax(maximum);
         String str=sqlHelper.sqlConcat();
         //创建视图对象：
-
-
-
+        ViewOpenInfoBizImpl viewOpenInfoBiz=new ViewOpenInfoBizImpl();
 
         //获得PageHelper对象并为其赋值：
         PageHelper pageHelper=new PageHelper();
@@ -72,13 +72,11 @@ public class TicketOpenServlet extends HttpServlet {
             int i=Integer.parseInt(string);
             pageHelper.setIndexPage(i);
         }
-        pageHelper.setTotalCount();//给  一共有多少条数据   赋值
+        pageHelper.setTotalCount(viewOpenInfoBiz.getTotalNum());//给  一共有多少条数据   赋值
         pageHelper.setPageSize(4);//给  每页显示的条数   赋值
-        pageHelper.setPageList(pbi.getBypage(pageHelper));
+        pageHelper.setPageList(viewOpenInfoBiz.getAllInfoByCurrentPage(pageHelper,str));
         Gson gson=new Gson();
-        response.getWriter().println( gson.toJson(pageHelper));
-
-
+        response.getWriter().println(gson.toJson(pageHelper));
     }
 /**
  * 获取所有符合条件的ticketopen开单表信息
@@ -87,27 +85,23 @@ public class TicketOpenServlet extends HttpServlet {
  * */
     protected void getTicketopeninfoByconditions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //获得客户端输入参数：
-        String voucher=request.getParameter("voucher number");
-        String acquired=request.getParameter("acquired enterprise");
-        String enterprise=request.getParameter("enterprise billing");
-        String billing=request.getParameter("billing date");
-        String divbutton=request.getParameter("divbutton");
-        String minimum=request.getParameter("minimum amount");
-        String maximum=request.getParameter("maximum amount");
+        String voucher=request.getParameter("vouchernumber");
+        String acquired=request.getParameter("acquiredenterprise");
+        String enterprise=request.getParameter("enterprisebilling");
+        String billing=request.getParameter("billingdate");
+        String minimum=request.getParameter("minimum");
+        String maximum=request.getParameter("maximum");
         //使用工具类SqlHelper,将客户传过来的值输入到工具类对象中去：
         SqlHelper sqlHelper=new SqlHelper();
         sqlHelper.setNo(voucher);
         sqlHelper.setAcquirerEnterPriseId(acquired);
         sqlHelper.setEnterPriseId(enterprise);
         sqlHelper.setCreateTime(billing);
-        sqlHelper.setStatus(divbutton);
         sqlHelper.setAmountMin(minimum);
         sqlHelper.setAmountMax(maximum);
         String str=sqlHelper.sqlConcat();
         //创建视图对象：
-
-
-
+        ViewOpenInfoBizImpl viewOpenInfoBiz=new ViewOpenInfoBizImpl();
 
         //获得PageHelper对象并为其赋值：
         PageHelper pageHelper=new PageHelper();
@@ -118,24 +112,10 @@ public class TicketOpenServlet extends HttpServlet {
             int i=Integer.parseInt(string);
             pageHelper.setIndexPage(i);
         }
-        pageHelper.setTotalCount();//给  一共有多少条数据   赋值
-        pageHelper.setPageSize(4);//给  每页显示的条数   赋值
-        pageHelper.setPageList(pbi.getBypage(pageHelper));
+        pageHelper.setTotalCount(viewOpenInfoBiz.getTotalNum());//给  一共有多少条数据   赋值
+        pageHelper.setPageSize(5);//给  每页显示的条数   赋值
+        pageHelper.setPageList(viewOpenInfoBiz.getAllOnTheBillByCurrentPage(pageHelper,str));
         Gson gson=new Gson();
         response.getWriter().println( gson.toJson(pageHelper));
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
 }

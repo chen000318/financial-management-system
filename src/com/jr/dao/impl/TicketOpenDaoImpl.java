@@ -22,40 +22,12 @@ public class TicketOpenDaoImpl implements ITicketOpenDao {
      * 这里利用SqlHelper工具类返回的字符串进行查询
      * where后面需要加上一个 id is not null
      * */
-    @Override
-    public List<Ticketopen> queryAllByConditions(String str) {
-        List<Ticketopen> list=new ArrayList<>();
-        try {
-            con=DBHelper.getCon();
-            String sql="SELECT no,aname,amount,ename,iname,create_time,expiry_time,uplink_address,status FROM openinfo WHERE id is not NULL"+str;
-            ps=con.prepareStatement(sql);
-            rs=ps.executeQuery();
-            while (rs.next()){
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DBHelper.closeAll(con,ps, rs);
-        }
-
-
-        return list;
-    }
 
     /*
      * 查询符合条件的开单中的开单信息（复核）
      * 这里利用SqlHelper工具类返回的字符串进行查询
      * where后面加上status='开单中'
-     * */
-    @Override
-    public List<Ticketopen> queryAllByConditionsOnTheBill(String str) {
-        return null;
-    }
+
 
     /*
      * 添加开单信息

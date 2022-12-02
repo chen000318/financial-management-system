@@ -14,10 +14,10 @@ public interface IViewOpenInfoBiz {
     /**
      * 获取当前页的全部信息(所有状态)
      */
-    public List<ViewOpenInfo> getAllInfoByCurrentPage(PageHelper pageHelper);
+    public List<ViewOpenInfo> getAllInfoByCurrentPage(PageHelper pageHelper,String str);
 
     /**
      * 获取当前页的复核信息(状态为开单中)
      */
-    public List<ViewOpenInfo> getAllOnTheBillByCurrentPage(PageHelper pageHelper);
+    public List<ViewOpenInfo> getAllOnTheBillByCurrentPage(PageHelper pageHelper,String str);
 }
