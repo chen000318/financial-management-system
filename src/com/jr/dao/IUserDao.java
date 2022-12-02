@@ -9,7 +9,7 @@ public interface IUserDao {
     /**
      * 通过用户账号和用户密码查询指定用户
      */
-    public User queryByAccountAndPassword();
+    public User queryByAccountAndPassword(User user);
 
 
 }

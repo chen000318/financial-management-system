@@ -14,6 +14,44 @@
 	<link rel="stylesheet" href="assets/css/amazeui.min.css" />
 	<link rel="stylesheet" href="assets/css/admin.css">
 	<link rel="stylesheet" href="assets/css/app.css">
+	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("[name='login_a']>div")[0].style="opacity:0.5";
+			$("[name='username']").blur(function () {
+				if($("[name='username']").val()==""){
+					$(this)[0].style="border:1px red solid";
+					$("[name='login_a']>div")[0].style="opacity:0.5";
+				}else {
+					$(this)[0].style="border:0px black solid";
+				}
+				if($("[name='username']").val()!=""&&$("[name='password']").val()!="") {
+					$("[name='login_a']>div")[0].style="opacity:1.0";
+				}
+
+			})
+			$("[name='password']").blur(function () {
+				if($(this).val()==""){
+					$(this)[0].style="border:1px red solid";
+					$("[name='login_a']>div")[0].style="opacity:0.5";
+				}else {
+					$(this)[0].style="border:0px black solid";
+				}
+				if($("[name='username']").val()!=""&&$("[name='password']").val()!="") {
+					$("[name='login_a']>div")[0].style="opacity:1.0";
+				}
+			})
+
+			$("[name='login_a']").click(function () {
+				if($("[name='username']").val()!=""&&$("[name='password']").val()!=""){
+					document.myform.action="us";
+					document.myform.method="post";
+					document.myform.submit();
+				}
+			})
+
+		})
+	</script>
 	<style>
 		.loginBtn {
 			margin-top: 20px;
@@ -45,16 +83,16 @@
 				</div>
 			</div>
 			<div class="am-u-sm-10 login-am-center">
-				<form class="am-form">
+				<form class="am-form" name="myform">
 					<fieldset>
 						<div class="am-form-group">
-							<input type="email" class="" id="doc-ipt-email-1" placeholder="请输入账号">
+							<input type="email" class="" id="doc-ipt-email-1" placeholder="请输入账号" name="username">
 						</div>
 						<div class="am-form-group">
-							<input type="password" class="" id="doc-ipt-pwd-1" placeholder="请输入密码">
+							<input type="password" class="" id="doc-ipt-pwd-1" placeholder="请输入密码" name="password">
 						</div>
-						<a href="ticket-open.jsp" class="loginBtn">
-							<div>登 录</div>
+						<a class="loginBtn" name="login_a">
+							<div >登 录</div>
 						</a>
 					</fieldset>
 				</form>
