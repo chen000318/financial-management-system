@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.Properties;
 
 public class DBHelper {
+
     public static Connection getCon() throws IOException, ClassNotFoundException, SQLException {
         InputStream is = ConnectionPropertiesTransform.class.getClassLoader().getResourceAsStream("jdbc.properties");
         Properties p = new Properties();

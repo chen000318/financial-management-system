@@ -30,6 +30,57 @@
             color: #999;
         }
     </style>
+
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {  //窗口加载
+
+            $.get("es","i=1",function (enterprise) {//窗口加载后加载开单企业
+                eval("var enterprise="+enterprise);
+                $("#enterprisename").val(enterprise.name);
+                $("#social_uniform_code").val(enterprise.socialUniformCcode);
+            })
+
+            $.get("es","i=2",function (list) {//窗口加载后通过下拉框选择收单企业
+                eval("var list1="+list);
+                for(var i=0;i<list1.length;i++){
+                    var obj="<option value='"+list1[i].id+"'>"+list1[i].name+"</option>";
+                    $(obj).appendTo("[name='select1']");
+
+                }
+            })
+
+            $("[name='select1']").change(function () {
+                var str = $(this).val();
+                $.get("es","i=2",function (list) {//选择收单企业后自动选择企业社会编码
+                    eval("var list2="+list);
+                    for (var i = 0; i < list2.length; i++) {
+                        if(str==(list2[i].id)){
+                            $("#social_uniform_code1").val(list2[i].socialUniformCcode);
+                            break;
+                        }
+                    }
+                })
+            })
+
+            $.get("is",function (list) {
+                eval("list3="+list);
+                for (var i = 0; i < list3; i++) {
+                    var obj="<option value='"+list3[i].id+"'>"+list3[i].name+"</option>";
+                    $(obj).appendTo("[name='select2']");
+                }
+            })
+            $("[name='select2']").change(function () {
+                var str = $(this).val();
+            })
+
+        })
+
+
+
+    </script>
+
+
 </head>
 <body data-type="generalComponents">
 <header class="am-topbar am-topbar-inverse admin-header">
@@ -120,8 +171,8 @@
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 开单企业</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
-                                            <input disabled type="text" value="百度科技有限公司" id="user-name"
-                                                   placeholder="请输入开单企业">
+                                            <input disabled type="text" value="" id="enterprisename"
+                                                   placeholder="请输入开单企业"><%--修改了id--%>
                                         </div>
                                     </div>
                                 </form>
@@ -131,7 +182,7 @@
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">统一社会信用代码</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
-                                            <input disabled type="text" id="user-name" placeholder="请输入统一社会信用代码">
+                                            <input disabled type="text" id="social_uniform_code" placeholder="请输入统一社会信用代码"><%--修改了id--%>
                                         </div>
                                     </div>
                                 </form>
@@ -141,11 +192,11 @@
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 收单企业</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
-                                            <select data-am-selected>
-                                                <option value="">请选择收单企业</option>
-                                                <option value="a">百度科技有限公司</option>
+                                            <select data-am-selected name="select1">
+                                                <option value="" name="acquirer_enterprise_id">请选择收单企业</option>
+                                                <%--<option value="a">百度科技有限公司</option>
                                                 <option value="b">京东集团</option>
-                                                <option value="c">小米</option>
+                                                <option value="c">小米</option>--%>
                                             </select>
                                         </div>
                                     </div>
@@ -156,7 +207,7 @@
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">统一社会信用代码</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
-                                            <input disabled type="text" id="user-name" placeholder="请输入统一社会信用代码">
+                                            <input disabled type="text" id="social_uniform_code1" placeholder="请输入统一社会信用代码"><%--修改id--%>
                                         </div>
                                     </div>
                                 </form>
@@ -176,11 +227,11 @@
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 金融机构</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
-                                            <select data-am-selected>
-                                                <option value="">请选择金融机构</option>
-                                                <option value="a">兴业银行</option>
+                                            <select data-am-selected name="select2">
+                                                <option value="" name="instiuty_name">请选择金融机构</option>
+                                                <%--<option value="a">兴业银行</option>
                                                 <option value="b">工商银行</option>
-                                                <option value="c">中国银行</option>
+                                                <option value="c">中国银行</option>--%>
                                             </select>
                                         </div>
                                     </div>
