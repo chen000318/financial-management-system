@@ -25,7 +25,7 @@ public class EnterpriseDaoImpl implements IEnterpriseDao {
      * 根据企业id查询企业信息
      * */
     @Override
-    public Enterprise queryByid(int id) {
+    public Enterprise queryByUid(int id) {
         Enterprise enterprise = null;
         try {
             String sql = "SELECT tp.name,tp.social_uniform_code FROM t_enterprise tp WHERE id=(SELECT enterprise_id FROM t_user WHERE id=?)";
@@ -51,7 +51,7 @@ public class EnterpriseDaoImpl implements IEnterpriseDao {
     }
 
     /**
-     *查询所有企业名称
+     *查询所有企业信息
      * */
     @Override
     public List<Enterprise> queryAllEnterpriseNames() {
@@ -76,5 +76,10 @@ public class EnterpriseDaoImpl implements IEnterpriseDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public Enterprise queryEnterpriseInfoByid(int id) {
+        return null;
     }
 }
