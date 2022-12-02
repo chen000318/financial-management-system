@@ -1,11 +1,13 @@
 package com.jr.biz.impl;
 
 import com.jr.biz.ITicketopenBiz;
+import com.jr.dao.impl.TicketOpenDaoImpl;
 import com.jr.entry.Ticketopen;
 
 import java.util.List;
 
 public class TicketopenBizImpl implements ITicketopenBiz {
+    TicketOpenDaoImpl ticketOpenDao=new TicketOpenDaoImpl();
     /**
      * 获取符合条件的所有状态的开单信息（开单）
      * @param str
@@ -13,7 +15,7 @@ public class TicketopenBizImpl implements ITicketopenBiz {
      */
     @Override
     public List<Ticketopen> getAllByConditions(String str) {
-        return null;
+        return ticketOpenDao.queryAllByConditions(str);
     }
 
     /**
@@ -23,7 +25,7 @@ public class TicketopenBizImpl implements ITicketopenBiz {
      */
     @Override
     public List<Ticketopen> getAllByConditionsOnTheBill(String str) {
-        return null;
+        return ticketOpenDao.queryAllByConditionsOnTheBill(str);
     }
 
     /**
@@ -33,7 +35,7 @@ public class TicketopenBizImpl implements ITicketopenBiz {
      */
     @Override
     public int addTicket(Ticketopen ticketopen) {
-        return 0;
+        return ticketOpenDao.insertTicket(ticketopen);
     }
 
     /**
@@ -43,6 +45,6 @@ public class TicketopenBizImpl implements ITicketopenBiz {
      */
     @Override
     public int updateTicketopenStatus(Ticketopen ticketopen) {
-        return 0;
+        return ticketOpenDao.alertTicketStatus(ticketopen);
     }
 }
