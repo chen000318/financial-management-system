@@ -21,21 +21,20 @@ public class EnterpriseBizImpl implements IEnterpriseBiz {
         return enterpriseDao.queryByUid(id);
     }
 
-    /*
-     *获取所有企业信息
-     */
-
-    @Override
-    public List<Enterprise> getAllEnterpriseNames() {
-
-        return enterpriseDao.queryAllEnterpriseNames();
-    }
-
     /**
      * 通过企业id获取企业信息
      */
     @Override
     public Enterprise getEnterpriseInfoByid(int id) {
-        return null;
+        return enterpriseDao.queryByUid(id);
+    }
+
+    /**
+     *获取所有企业名称
+     * */
+    @Override
+    public List<Enterprise> getAllEnterpriseNames(int ide) {
+
+        return enterpriseDao.queryAllEnterpriseNames(ide);
     }
 }

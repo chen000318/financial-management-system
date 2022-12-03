@@ -52,9 +52,9 @@ public class EnterpriseServlet extends HttpServlet {
  *
  * */
     protected void getAllEnterprise(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user =(User) request.getSession().getAttribute("user");
         EnterpriseBizImpl enterpriseBiz = new EnterpriseBizImpl();
-        List<Enterprise> list = enterpriseBiz.getAllEnterpriseNames();
-        System.out.println(list);
+        List<Enterprise> list = enterpriseBiz.getAllEnterpriseNames(user.getId());
         Gson gson = new Gson();
         response.getWriter().println(gson.toJson(list));
     }

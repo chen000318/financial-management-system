@@ -13,7 +13,7 @@ public interface IEnterpriseDao {
     /*
      *查询所有企业信息
      * */
-    public List<Enterprise> queryAllEnterpriseNames();
+    public List<Enterprise> queryAllEnterpriseNames(int ide);
 
     /**
      * 通过企业id查询企业信息
