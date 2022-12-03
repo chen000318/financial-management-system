@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewOpenInfoDaoImpl implements IViewOpenInfoDao {
@@ -28,6 +29,7 @@ public class ViewOpenInfoDaoImpl implements IViewOpenInfoDao {
             con = DBHelper.getCon();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
+            rs.next();
             num = rs.getInt("count(id)");
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,11 +47,12 @@ public class ViewOpenInfoDaoImpl implements IViewOpenInfoDao {
      * 查询当前页的数据信息(所有状态)
      */
     @Override
-    public List<ViewOpenInfo> queryAllInfoByCurrentPage(PageHelper pageHelper) {
-        List<ViewOpenInfo> list = null;
+    public List<ViewOpenInfo> queryAllInfoByCurrentPage(PageHelper pageHelper,String str) {
+        List<ViewOpenInfo> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT no,aname,amount,ename,iname,create_time,expiry_time,uplink_address,status FROM openinfo limit ?,?";
+            String sql = "SELECT no,aname,amount,ename,iname,create_time,expiry_time,uplink_address,status FROM openinfo WHERE id is not null "+str+" limit ?,?";
+            System.out.println(sql);
             con = DBHelper.getCon();
             ps = con.prepareStatement(sql);
             ps.setInt(1,pageHelper.getStartNum());
@@ -66,7 +69,7 @@ public class ViewOpenInfoDaoImpl implements IViewOpenInfoDao {
                 viewOpenInfo.setCreateTime(simpleDateFormat.format(rs.getDate("create_time")));
                 viewOpenInfo.setExpiryTime(simpleDateFormat.format(rs.getDate("expiry_time")));
                 viewOpenInfo.setUpLinkAddress(rs.getString("uplink_address"));
-                viewOpenInfo.setStatus("status");
+                viewOpenInfo.setStatus(rs.getString("status"));
                 list.add(viewOpenInfo);
             }
         } catch (IOException e) {
@@ -85,11 +88,11 @@ public class ViewOpenInfoDaoImpl implements IViewOpenInfoDao {
      * 查询当前页的数据信息(开单中)
      */
     @Override
-    public List<ViewOpenInfo> queryAllOnTheBillByCurrentPage(PageHelper pageHelper) {
-        List<ViewOpenInfo> list = null;
+    public List<ViewOpenInfo> queryAllOnTheBillByCurrentPage(PageHelper pageHelper,String str) {
+        List<ViewOpenInfo> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT no,aname,amount,ename,iname,create_time,expiry_time,uplink_address,status FROM openinfo WHERE status='B' limit ?,?";
+            String sql = "SELECT no,aname,amount,ename,iname,create_time,expiry_time,uplink_address,status FROM openinfo WHERE status='B'"+str+" limit ?,?";
             con = DBHelper.getCon();
             ps = con.prepareStatement(sql);
             ps.setInt(1,pageHelper.getStartNum());

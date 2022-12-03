@@ -14,6 +14,323 @@
     <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var butt=null;
+        $(document).on("click","button",function () {
+            butt = $(this).val();
+            var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                         "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                         "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                         "&billingdate="+$("[name='billing date']").val()+
+                         "&button="+$(this).val()+
+                         "&minimum="+$("[name='minimum amount']").val()+
+                         "&maximum="+$("[name='maximum amount']").val();
+            $.get("tos",url,function (str) {
+                eval("var pageHelper="+str);
+                $("[id='doc-modal-list']").empty();
+                for(var i=0;i<pageHelper.pageList.length;i++){
+                    var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+                    var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+                           (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+                           (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+                                "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                    var obj="<tr>" +
+                        "<td>"+pageHelper.pageList[i].no+"</td>" +
+                        "<td>"+pageHelper.pageList[i].aname+"</td>" +
+                        "<td>"+pageHelper.pageList[i].amount+"</td>" +
+                        "<td>"+pageHelper.pageList[i].ename+"</td>" +
+                        "<td>"+pageHelper.pageList[i].iname+"</td>" +
+                        "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+                        "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                        "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                        "<td>"+a+"</td>"+
+                        "<td>"+b+"</td>"+
+                        "</tr>";
+                    $(obj).appendTo($("[name='showtable']"));
+                }
+            })
+        })
+        $(document).ready(function () {
+            $("[name='voucher number']").blur(function () {
+                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&button="+butt+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
+                $.get("tos",url,function (str) {
+                    eval("var pageHelper="+str);
+                    $("[id='doc-modal-list']").empty();
+                    for(var i=0;i<pageHelper.pageList.length;i++){
+                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+                               (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+                               (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+                                    "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                        var obj="<tr>" +
+                            "<td>"+pageHelper.pageList[i].no+"</td>" +
+                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
+                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
+                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                            "<td>"+a+"</td>"+
+                            "<td>"+b+"</td>"+
+                            "</tr>";
+                        $(obj).appendTo($("[name='showtable']"));
+                    }
+                })
+            })
+            $.get("tos","i=3",function (str) {
+                $("[name='acquired enterprise']")[0].options.length=1;
+                eval("var list="+str)
+                for(var i=0;i<list.length;i++){
+                    var obj="<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+                    $(obj).appendTo("[name='acquired enterprise']");
+                }
+            })
+
+            $("[name='acquired enterprise']").change(function () {
+                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&button="+butt+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
+                $.get("tos",url,function (str) {
+                    eval("var pageHelper="+str);
+                    $("[id='doc-modal-list']").empty();
+                    for(var i=0;i<pageHelper.pageList.length;i++){
+                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+                               (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+                               (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+                                    "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                        var obj="<tr>" +
+                            "<td>"+pageHelper.pageList[i].no+"</td>" +
+                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
+                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
+                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                            "<td>"+a+"</td>"+
+                            "<td>"+b+"</td>"+
+                            "</tr>";
+                        $(obj).appendTo($("[name='showtable']"));
+                    }
+                })
+            })
+            $.get("tos","i=3",function (str) {
+                $("[name='enterprise billing']")[0].options.length=1;
+                eval("var list="+str)
+                for(var i=0;i<list.length;i++){
+                    var obj="<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+                    $(obj).appendTo("[name='enterprise billing']");
+                }
+            })
+            $("[name='enterprise billing']").change(function () {
+                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&button="+butt+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
+
+                $.get("tos",url,function (str) {
+                    eval("var pageHelper="+str);
+                    $("[id='doc-modal-list']").empty();
+                    for(var i=0;i<pageHelper.pageList.length;i++){
+                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+                               (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+                               (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+                                    "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                        var obj="<tr>" +
+                            "<td>"+pageHelper.pageList[i].no+"</td>" +
+                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
+                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
+                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                            "<td>"+a+"</td>"+
+                            "<td>"+b+"</td>"+
+                            "</tr>";
+                        $(obj).appendTo($("[name='showtable']"));
+                    }
+                })
+            })
+            $("[name='billing date']").change(function () {
+                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&button="+butt+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
+                $.get("tos",url,function (str) {
+                    eval("var pageHelper="+str);
+                    $("[id='doc-modal-list']").empty();
+                    for(var i=0;i<pageHelper.pageList.length;i++){
+                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+                               (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+                               (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+                                    "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                        var obj="<tr>" +
+                            "<td>"+pageHelper.pageList[i].no+"</td>" +
+                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
+                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
+                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                            "<td>"+a+"</td>"+
+                            "<td>"+b+"</td>"+
+                            "</tr>";
+                        $(obj).appendTo($("[name='showtable']"));
+                    }
+                })
+            })
+            // $("[name='divbutton']>button").click(function () {
+            //     var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+"&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+            //         "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
+            //         "&button="+$("[name='divbutton']>button").val()+"&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
+            //     alert($("[name='divbutton']>button").val());
+            //     $.get("tos",url,function (str) {
+            //         eval("var pageHelper="+str);
+            //         $("[id='doc-modal-list']").empty();
+            //         for(var i=0;i<pageHelper.pageList.length;i++){
+            //             var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+            //             var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+            //                    (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+            //                    (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+            //                         "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+            //             var obj="<tr>" +
+            //                 "<td>"+pageHelper.pageList[i].no+"</td>" +
+            //                 "<td>"+pageHelper.pageList[i].aname+"</td>" +
+            //                 "<td>"+pageHelper.pageList[i].amount+"</td>" +
+            //                 "<td>"+pageHelper.pageList[i].ename+"</td>" +
+            //                 "<td>"+pageHelper.pageList[i].iname+"</td>" +
+            //                 "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+            //                 "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+            //                 "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+            //                 "<td>"+a+"</td>"+
+            //                 "<td>"+b+"</td>"+
+            //                 "</tr>";
+            //             $(obj).appendTo("table");
+            //         }
+            //     })
+            // })
+            $("[name='minimum amount']").blur(function() {
+                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&button="+butt+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
+                $.get("tos",url,function (str) {
+                    eval("var pageHelper="+str);
+                    $("[id='doc-modal-list']").empty();
+                    for(var i=0;i<pageHelper.pageList.length;i++){
+                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+                               (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+                               (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+                                    "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                        var obj="<tr>" +
+                            "<td>"+pageHelper.pageList[i].no+"</td>" +
+                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
+                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
+                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                            "<td>"+a+"</td>"+
+                            "<td>"+b+"</td>"+
+                            "</tr>";
+                        $(obj).appendTo($("[name='showtable']"));
+
+                    }
+                })
+            })
+            $("[name='maximum amount']").blur(function () {
+                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&button="+butt+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
+                $.get("tos",url,function (str) {
+                    eval("var pageHelper="+str);
+                    $("[id='doc-modal-list']").empty();
+                    for(var i=0;i<pageHelper.pageList.length;i++){
+                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+                               (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+                               (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+                                    "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                        var obj="<tr>" +
+                            "<td>"+pageHelper.pageList[i].no+"</td>" +
+                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
+                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
+                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                            "<td>"+a+"</td>"+
+                            "<td>"+b+"</td>"+
+                            "</tr>";
+                        $(obj).appendTo($("[name='showtable']"));
+                    }
+                })
+            })
+            $(document).on("click","a",function () {
+
+                var val=$(this)[0].getAttribute("value");
+
+                $.get("tos","i=1&index="+val,function (str) {
+                    eval("var pageHelper="+str);
+                    $("[id='doc-modal-list']").empty();
+                    for(var i=0;i<pageHelper.pageList.length;i++){
+                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
+                               (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
+                               (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
+                                    "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                        var obj="<tr>" +
+                            "<td>"+pageHelper.pageList[i].no+"</td>" +
+                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
+                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
+                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
+                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                            "<td>"+a+"</td>"+
+                            "<td>"+b+"</td>"+
+                            "</tr>";
+                        $(obj).appendTo("[id='doc-modal-list']");
+                    }
+                });
+            });
+        })
+
+    </script>
 </head>
 <body data-type="generalComponents">
 <header class="am-topbar am-topbar-inverse admin-header">
@@ -116,15 +433,15 @@
                                 <span class="am-input-group-btn">
                                     <span style="font-size: 14px;margin-right: 8px;margin-left: 8px">凭证编号</span>
                                 </span>
-                            <input type="text" class="am-form-field" placeholder="&nbsp;&nbsp;请输入凭证编号"
+                            <input type="text" name="voucher number" class="am-form-field" placeholder="&nbsp;&nbsp;请输入凭证编号"
                                    style="border: 1px solid #c2cad8;width: 84%;border-radius: 3px;">
                         </div>
                     </div>
                     <div class="am-u-sm-6 am-u-md-3">
                         <div class="am-form-group">
                             <span style="font-size: 14px;">收单企业</span>
-                            <select data-am-selected="{btnSize: 'sm'}">
-                                <option value="">请选择收单企业</option>
+                            <select data-am-selected="{btnSize: 'sm'}" name="acquired enterprise">
+                                <option value="null">请选择收单企业</option>
                                 <option value="a">百度科技有限公司</option>
                                 <option value="b">京东集团</option>
                                 <option value="c">小米</option>
@@ -134,8 +451,8 @@
                     <div class="am-u-sm-6 am-u-md-3">
                         <div class="am-form-group">
                             <span style="font-size: 14px;">开单企业</span>
-                            <select class="am-form-field" data-am-selected="{btnSize: 'sm'}">
-                                <option value="">请选择开单企业</option>
+                            <select class="am-form-field" data-am-selected="{btnSize: 'sm'}" name="enterprise billing">
+                                <option value="null">请选择开单企业</option>
                                 <option value="a">腾讯科技有限公司</option>
                                 <option value="b">隆基股份有限公司</option>
                             </select>
@@ -146,7 +463,7 @@
                                 <span class="am-input-group-btn">
                                     <span style="font-size: 14px;margin-right: 8px;margin-left: 8px">开单日期</span>
                                 </span>
-                            <input type="text" class="am-form-field" data-am-datepicker
+                            <input type="text" name="billing date" class="am-form-field" data-am-datepicker
                                    placeholder="&nbsp;&nbsp;请选择日期"
                                    style="border: 1px solid #c2cad8;width: 68%;border-radius: 3px;">
                         </div>
@@ -158,11 +475,11 @@
                                 <span class="am-input-group-btn">
                                     <span style="font-size: 14px;margin-right: 8px;margin-left: 8px">处理状态</span>
                                 </span>
-                            <div class="am-btn-group am-btn-group-sm status-type">
+                            <div class="am-btn-group am-btn-group-sm status-type" name="divbutton">
                                 <button type="button" class="am-btn am-btn-primary am-radius">全部</button>
-                                <button type="button" class="am-btn am-btn-default">成功</button>
-                                <button type="button" class="am-btn am-btn-default">开单中</button>
-                                <button type="button" class="am-btn am-btn-default">失败</button>
+                                <button type="button" class="am-btn am-btn-default" value="A">成功</button>
+                                <button type="button" class="am-btn am-btn-default" value="B">开单中</button>
+                                <button type="button" class="am-btn am-btn-default" value="D">失败</button>
                             </div>
                         </div>
                     </div>
@@ -171,12 +488,12 @@
                                 <span class="am-input-group-btn">
                                     <span style="font-size: 14px;margin-right: 8px;margin-left: 8px">凭证金额</span>
                                 </span>
-                            <input type="text" class="am-form-field" placeholder="&nbsp;&nbsp;最低金额(万)"
+                            <input type="text" name="minimum amount" class="am-form-field" placeholder="&nbsp;&nbsp;最低金额(万)"
                                    style="border: 1px solid #c2cad8;width: 23%;border-radius: 3px;">
                             <div class="am-form-field"
                                  style="width: 0%; border-radius: 3px;border: none;margin-left: 10px;">~
                             </div>
-                            <input type="text" class="am-form-field" placeholder="&nbsp;&nbsp;最高金额(万)"
+                            <input type="text" name="maximum amount" class="am-form-field" placeholder="&nbsp;&nbsp;最高金额(万)"
                                    style="border: 1px solid #c2cad8;width: 23%;border-radius: 3px;margin-left: 20px;">
                         </div>
                     </div>
@@ -188,7 +505,7 @@
             <div class="am-g">
                 <div class="am-u-sm-12">
                     <form class="am-form">
-                        <table class="am-table am-table-striped am-table-hover table-main">
+                        <table class="am-table am-table-striped am-table-hover table-main" name="showtable">
                             <thead>
                             <tr>
                                 <th class="table-title">凭证编号</th>

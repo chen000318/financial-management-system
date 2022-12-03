@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface IEnterpriseBiz {
     /*
-    * 通过用户id获取企业信息
-    * */
+     * 通过用户id获取企业信息
+     * */
     public Enterprise getEnterpriseInfo(int uid);
 
     /*
-    *获取所有企业信息
-    * */
+     *获取所有企业信息
+     * */
     public List<Enterprise> getAllEnterpriseNames();
 
     /**
