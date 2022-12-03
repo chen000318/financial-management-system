@@ -35,12 +35,12 @@ public class SqlHelper {
     }
     public String sqlConcat(){
         return (no==null||no==""?"":" AND no LIKE '%"+no+"%'")+
-                (acquirerEnterPriseId.equals("null")||acquirerEnterPriseId==""?"":" AND acquirer_enterprise_id='"+acquirerEnterPriseId+"'")+
-                (enterPriseId.equals("null")||enterPriseId==""?"":" AND enterprise_id='"+enterPriseId+"'")+
-                (createTime.equals("null")||createTime==""?"":" AND create_time='"+createTime+"'")+
+                ("null".equals(acquirerEnterPriseId)||acquirerEnterPriseId==""||acquirerEnterPriseId==null?"":" AND acquirer_enterprise_id='"+acquirerEnterPriseId+"'")+
+                ("null".equals(enterPriseId)||enterPriseId==""||enterPriseId==null?"":" AND enterprise_id='"+enterPriseId+"'")+
+                ("null".equals(createTime)||createTime==""||createTime==null?"":" AND create_time='"+createTime+"'")+
                 (status==null||"null".equals(status)||status==""?"":" AND status='"+status+"'")+
-                (amountMax.equals("null")||amountMax==""?"":" AND amount<='"+amountMax+"'")+
-                (amountMin.equals("null")||amountMin==""?"":" AND amount>='"+amountMin+"'");
+                ("null".equals(amountMax)||amountMax==""||amountMax==null?"":" AND amount<='"+amountMax+"'")+
+                ("null".equals(amountMin)||amountMin==""||amountMin==null?"":" AND amount>='"+amountMin+"'");
     }
 
     public String getNo() {

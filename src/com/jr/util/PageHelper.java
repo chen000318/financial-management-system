@@ -7,7 +7,7 @@ public class PageHelper<T> {
     private int totalCount;//总条数
     private int pageSize;//每页的条数
     private int indexPage;//当前页面
-    private int totalPage;//
+    private int totalPage;//总页数
     private List<T> pageList;
 
     private int startNum;
@@ -36,12 +36,15 @@ public class PageHelper<T> {
         this.indexPage = indexPage;
     }
 
+    public void setTotalPage(){
+        this.totalPage=totalCount%pageSize==0?
+                totalCount/pageSize:
+                totalCount/pageSize+1;
+    }
     //计算总页数：总条数    17/3  62  =
     public int getTotalPage() {
         //总计条数除以总计页数如果能整除name返回总计页数 如果不能整除那么返回 取整+1
-        return totalCount%pageSize==0?
-                totalCount/pageSize:
-                totalCount/pageSize+1;
+        return totalPage;
     }
 
    /* public void setTotalPage(int totalPage) {

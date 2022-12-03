@@ -53,6 +53,8 @@ public class ViewOpenInfoDaoImpl implements IViewOpenInfoDao {
         try {
             String sql = "SELECT no,aname,amount,ename,iname,create_time,expiry_time,uplink_address,status FROM openinfo WHERE id is not null "+str+" limit ?,?";
             System.out.println(sql);
+            System.out.println(pageHelper.getStartNum());
+            System.out.println(pageHelper.getPageSize());
             con = DBHelper.getCon();
             ps = con.prepareStatement(sql);
             ps.setInt(1,pageHelper.getStartNum());

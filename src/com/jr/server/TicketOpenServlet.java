@@ -27,13 +27,33 @@ public class TicketOpenServlet extends HttpServlet {
             getTicketopeninfoByconditions(request, response);
         }else if (num.equals("3")){
             enterprisequery(request, response);
+        }else if(num.equals("4")){
+            System.out.println("我来了");
         }
 
     }
 
+    protected void page(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //创建视图对象：
+        ViewOpenInfoBizImpl viewOpenInfoBiz=new ViewOpenInfoBizImpl();
+        //获得PageHelper对象并为其赋值：
+        PageHelper pageHelper=new PageHelper();
+        String string=request.getParameter("index");
+        if(string==null){
+            pageHelper.setIndexPage(1); //给   当前是第几页   赋值
+        }else{
+            int i=Integer.parseInt(string);
+            pageHelper.setIndexPage(i);
+        }
+        pageHelper.setTotalCount(viewOpenInfoBiz.getTotalNum());//给  一共有多少条数据   赋值
+        pageHelper.setPageSize(4);//给  每页显示的条数   赋值
+        Gson gson=new Gson();
+        response.getWriter().println(gson.toJson(pageHelper));
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        doGet(req, resp);
     }
 
     @Override
@@ -69,7 +89,7 @@ public class TicketOpenServlet extends HttpServlet {
         //获得PageHelper对象并为其赋值：
         PageHelper pageHelper=new PageHelper();
         String string=request.getParameter("index");
-        if(string==null){
+        if(string==null||"".equals(string)||"null".equals(string)){
             pageHelper.setIndexPage(1); //给   当前是第几页   赋值
         }else{
             int i=Integer.parseInt(string);
@@ -78,6 +98,7 @@ public class TicketOpenServlet extends HttpServlet {
         pageHelper.setTotalCount(viewOpenInfoBiz.getTotalNum());//给  一共有多少条数据   赋值
         pageHelper.setPageSize(4);//给  每页显示的条数   赋值
         pageHelper.setPageList(viewOpenInfoBiz.getAllInfoByCurrentPage(pageHelper,str));
+        pageHelper.setTotalPage();
         Gson gson=new Gson();
         response.getWriter().println(gson.toJson(pageHelper));
 

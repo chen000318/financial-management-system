@@ -52,6 +52,20 @@
             })
         })
         $(document).ready(function () {
+            $.get("tos","i=1",function (str) {
+                eval("var pageHelper="+str);
+                if(pageHelper.totalPage>5){
+                    for (var i=5;i>=2;i--){
+                        $("[name='page']").after("<li><a value="+i+">"+i+"</a></li>")
+                    }
+                }else {
+                    for (var i=pageHelper.totalPage;i>=2;i--){
+                        $("[name='page']").after("<li><a value="+i+">"+i+"</a></li>")
+                    }
+                }
+
+            })
+
             $("[name='voucher number']").blur(function () {
                 var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
                              "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
@@ -60,7 +74,7 @@
                              "&button="+butt+
                              "&minimum="+$("[name='minimum amount']").val()+
                              "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
+                $.post("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
                     for(var i=0;i<pageHelper.pageList.length;i++){
@@ -85,7 +99,7 @@
                     }
                 })
             })
-            $.get("tos","i=3",function (str) {
+            $.post("tos","i=3",function (str) {
                 $("[name='acquired enterprise']")[0].options.length=1;
                 eval("var list="+str)
                 for(var i=0;i<list.length;i++){
@@ -102,7 +116,7 @@
                              "&button="+butt+
                              "&minimum="+$("[name='minimum amount']").val()+
                              "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
+                $.post("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
                     for(var i=0;i<pageHelper.pageList.length;i++){
@@ -127,7 +141,7 @@
                     }
                 })
             })
-            $.get("tos","i=3",function (str) {
+            $.post("tos","i=3",function (str) {
                 $("[name='enterprise billing']")[0].options.length=1;
                 eval("var list="+str)
                 for(var i=0;i<list.length;i++){
@@ -144,7 +158,7 @@
                              "&minimum="+$("[name='minimum amount']").val()+
                              "&maximum="+$("[name='maximum amount']").val();
 
-                $.get("tos",url,function (str) {
+                $.post("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
                     for(var i=0;i<pageHelper.pageList.length;i++){
@@ -177,7 +191,7 @@
                              "&button="+butt+
                              "&minimum="+$("[name='minimum amount']").val()+
                              "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
+                $.post("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
                     for(var i=0;i<pageHelper.pageList.length;i++){
@@ -207,7 +221,7 @@
             //         "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
             //         "&button="+$("[name='divbutton']>button").val()+"&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
             //     alert($("[name='divbutton']>button").val());
-            //     $.get("tos",url,function (str) {
+            //     $.post("tos",url,function (str) {
             //         eval("var pageHelper="+str);
             //         $("[id='doc-modal-list']").empty();
             //         for(var i=0;i<pageHelper.pageList.length;i++){
@@ -240,7 +254,7 @@
                              "&button="+butt+
                              "&minimum="+$("[name='minimum amount']").val()+
                              "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
+                $.post("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
                     for(var i=0;i<pageHelper.pageList.length;i++){
@@ -274,7 +288,7 @@
                              "&button="+butt+
                              "&minimum="+$("[name='minimum amount']").val()+
                              "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
+                $.post("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
                     for(var i=0;i<pageHelper.pageList.length;i++){
@@ -299,11 +313,9 @@
                     }
                 })
             })
-            $(document).on("click","a",function () {
-
+            $(document).on("click","#page_ul",function () {
                 var val=$(this)[0].getAttribute("value");
-
-                $.get("tos","i=1&index="+val,function (str) {
+                $.post("tos","i=1&index="+val,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
                     for(var i=0;i<pageHelper.pageList.length;i++){
@@ -623,13 +635,13 @@
                         <div class="am-cf">
 
                             <div class="am-fr">
-                                <ul class="am-pagination tpl-pagination">
-                                    <li class="am-disabled"><a href="#">«</a></li>
-                                    <li class="am-active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
+                                <ul class="am-pagination tpl-pagination" id="page_ul">
+                                    <li class="am-disabled"><a href="#" >«</a></li>
+                                    <li class="am-active" name="page"><a href="#" value="1">1</a></li>
+<%--                                    <li><a href="#">2</a></li>--%>
+<%--                                    <li><a href="#">3</a></li>--%>
+<%--                                    <li><a href="#">4</a></li>--%>
+<%--                                    <li><a href="#">5</a></li>--%>
                                     <li><a href="#">»</a></li>
                                 </ul>
                             </div>
