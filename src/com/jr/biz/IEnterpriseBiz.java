@@ -11,7 +11,12 @@ public interface IEnterpriseBiz {
     public Enterprise getEnterpriseInfo(int id);
 
     /**
+     * 通过企业id获取企业信息
+     */
+    public Enterprise getEnterpriseInfoByid(int id);
+
+    /**
     *获取所有企业名称
     * */
-    public List<Enterprise> getAllEnterpriseNames();
+    public List<Enterprise> getAllEnterpriseNames(int ide);
 }

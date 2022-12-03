@@ -14,4 +14,14 @@ public interface ITicketopenBiz {
      * 更新开单状态
      */
     public int updateTicketopenStatus(Ticketopen ticketopen);
+
+    /**
+     * 查询开单表最大id
+     */
+    public int queryMaxId();
+
+    /**
+     * 查询开单里面的所有付息方式
+     */
+    public List<Ticketopen> queryAllPayment();
 }

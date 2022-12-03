@@ -14,19 +14,27 @@ public class EnterpriseBizImpl implements IEnterpriseBiz {
     EnterpriseDaoImpl enterpriseDao = new EnterpriseDaoImpl();
 
     /**
-     * 通过id获取企业信息
+     * 通过用户id获取企业信息
      * */
     @Override
     public Enterprise getEnterpriseInfo(int id) {
-        return enterpriseDao.queryByid(id);
+        return enterpriseDao.queryByUid(id);
+    }
+
+    /**
+     * 通过企业id获取企业信息
+     */
+    @Override
+    public Enterprise getEnterpriseInfoByid(int id) {
+        return null;
     }
 
     /**
      *获取所有企业名称
      * */
     @Override
-    public List<Enterprise> getAllEnterpriseNames() {
+    public List<Enterprise> getAllEnterpriseNames(int ide) {
 
-        return enterpriseDao.queryAllEnterpriseNames();
+        return enterpriseDao.queryAllEnterpriseNames(ide);
     }
 }

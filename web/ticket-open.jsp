@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
@@ -51,11 +52,11 @@
             })
 
             $("[name='select1']").change(function () {
-                var str = $(this).val();
+                var str1 = $(this).val();
                 $.get("es","i=2",function (list) {//选择收单企业后自动选择企业社会编码
                     eval("var list2="+list);
                     for (var i = 0; i < list2.length; i++) {
-                        if(str==(list2[i].id)){
+                        if(str1==(list2[i].id)){
                             $("#social_uniform_code1").val(list2[i].socialUniformCcode);
                             break;
                         }
@@ -63,23 +64,50 @@
                 })
             })
 
-            $.get("is",function (list) {
+            $.get("is",function (list) {//加载后加载所有金融机构
                 eval("list3="+list);
-                for (var i = 0; i < list3; i++) {
+                for (var i = 0; i < list3.length; i++) {
                     var obj="<option value='"+list3[i].id+"'>"+list3[i].name+"</option>";
                     $(obj).appendTo("[name='select2']");
                 }
             })
-            $("[name='select2']").change(function () {
-                var str = $(this).val();
+
+            $.get("tos","i=1",function (list) {//加载后加载所有付息方式
+                eval("list3="+list);
+                for (var i = 0; i < list3.length; i++) {
+                    var obj="<option value='"+list3[i].paymentInterestType+"'>"+list3[i].paymentInterestType+"</option>";
+                    $(obj).appendTo("[name='select3']");
+                }
             })
+
+
+            // $("#submitBtn").click(function () {
+            //     document.getElementsByClassName("am-form am-form-horizontal").action="tos";
+            //     document.getElementsByClassName("am-form am-form-horizontal").method="get";
+            //     for(var i=0;i<document.getElementsByClassName("am-form am-form-horizontal").length-1;i++){
+            //         document.getElementsByClassName("am-form am-form-horizontal")[i].submit();
+            //     }
+            // })
+            var mydate = new Date();
+            document.getElementById("billdate").value=mydate.getFullYear()+"-"+(mydate.getMonth()+1)+"-"+mydate.getDate();
 
         })
 
+        function submit() {
+            alert($("[name='amount']").val());
+            $.ajax({
+                url : "tos?i=2&acquirer_enterprise_id="+$("[name='select1']").val()+"&amount="+$("[name='amount']").val()+
+                "&instiuty_name="+$("[name='select2']").val()+"&creat_time="+$("[name='creat_time']").val()+"&expiry_time="+$("[name='expiry_time']").val()+
+                "&payment_interest_type="+$("[name='select3']").val()+"&ticketRemark="+$("[name='ticketRemark']").val(),
+                type : "get",
+                success:function () {
+                    window.location.replace("tos")
+                }
+            })
+        }
 
 
     </script>
-
 
 </head>
 <body data-type="generalComponents">
@@ -167,18 +195,18 @@
                         <div class="am-g tpl-amazeui-form">
 
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form1">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 开单企业</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
                                             <input disabled type="text" value="" id="enterprisename"
-                                                   placeholder="请输入开单企业"><%--修改了id--%>
+                                                   placeholder="请输入开单企业" name=""><%--修改了id--%>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form2">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">统一社会信用代码</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
@@ -188,7 +216,7 @@
                                 </form>
                             </div>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form3">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 收单企业</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
@@ -203,7 +231,7 @@
                                 </form>
                             </div>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form4">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">统一社会信用代码</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
@@ -213,17 +241,17 @@
                                 </form>
                             </div>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form5">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 凭证金额</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
-                                            <input type="text" id="user-name" placeholder="请输入凭证金额">
+                                            <input type="text" id="user-name" placeholder="请输入凭证金额" name="amount">
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form6">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 金融机构</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
@@ -238,49 +266,53 @@
                                 </form>
                             </div>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form7">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 开单日期</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
                                             <input disabled type="text" class="am-form-field" data-am-datepicker
-                                                   value="2022-11-16" placeholder="&nbsp;&nbsp;请选择日期"
+                                                    placeholder="&nbsp;&nbsp;请选择日期" id="billdate" name="creat_time"
                                                    style="border: 1px solid #c2cad8;width: 100%;border-radius: 3px;">
                                         </div>
                                     </div>
                                 </form>
-                            </div>
+                            </div><%--<input type="text" id="time" size="50">
+                                        <script>
+                                        document.getElementById("time").value=new Date();
+                                    </script>--%>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form8">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 到期日期</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
                                             <input type="text" class="am-form-field" data-am-datepicker
-                                                   placeholder="&nbsp;&nbsp;请选择日期"
+                                                   placeholder="&nbsp;&nbsp;请选择日期" name="expiry_time"
                                                    style="border: 1px solid #c2cad8;width: 100%;border-radius: 3px;">
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form9">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 付息方式</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
-                                            <select placeholder="请选择付息方式" data-am-selected>
-                                                <option value="a">融资方付息</option>
-                                                <option value="b">核心企业付息</option>
+                                            <select data-am-selected name="select3">
+                                                <option value="" name="payment_interest_type">请选择付息方式</option>
+                                                <%--<option value="a">融资方付息</option>
+                                                <option value="b">核心企业付息</option>--%>
                                             </select>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="am-u-sm-12 am-u-md-6">
-                                <form class="am-form am-form-horizontal">
+                                <form class="am-form am-form-horizontal" id="form10">
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">备注</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
                                                 <textarea class="" rows="4" id="user-intro"
-                                                          placeholder="请输入备注"></textarea>
+                                                          placeholder="请输入备注" name="ticketRemark"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -291,7 +323,7 @@
                         <div style="text-align: center;margin-top:40px">
                             <a class="am-btn am-btn-default" href="open-list.jsp">取&nbsp;&nbsp;&nbsp;&nbsp; 消</a>
                             <a id="submitBtn" class="am-btn am-btn-primary"
-                               style="margin-left:20px">提&nbsp;&nbsp;&nbsp;&nbsp; 交</a>
+                               style="margin-left:20px" onclick="submit();">提&nbsp;&nbsp;&nbsp;&nbsp; 交</a>
                         </div>
                     </div>
                 </div>

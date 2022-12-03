@@ -54,12 +54,13 @@ public class EnterpriseDaoImpl implements IEnterpriseDao {
      *查询所有企业信息
      * */
     @Override
-    public List<Enterprise> queryAllEnterpriseNames() {
+    public List<Enterprise> queryAllEnterpriseNames(int ide) {
         List<Enterprise> list = new ArrayList<>();
         try {
-            String sql = "SELECT id,name,social_uniform_code FROM t_enterprise";
+            String sql = "SELECT id,name,social_uniform_code FROM t_enterprise WHERE id!=?";
             con = DBHelper.getCon();
             ps = con.prepareStatement(sql);
+            ps.setInt(1,ide);
             rs = ps.executeQuery();
             while (rs.next()){
                 Enterprise enterprise = new Enterprise();
