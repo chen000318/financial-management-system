@@ -65,7 +65,6 @@
 
             $.get("is",function (list) {
                 eval("list3="+list);
-                alert(list3);
                 for (var i = 0; i < list3; i++) {
                     var obj="<option value='"+list3[i].id+"'>"+list3[i].name+"</option>";
                     $(obj).appendTo("[name='select2']");

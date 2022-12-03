@@ -1,9 +1,11 @@
 package com.jr.biz.impl;
 
 import com.jr.biz.IReviewrecordBiz;
+import com.jr.dao.impl.ReviewrecordDaoImpl;
 import com.jr.entry.Reviewrecord;
 
 public class ReviewrecordBizImpl implements IReviewrecordBiz {
+    ReviewrecordDaoImpl reviewrecordDao=new ReviewrecordDaoImpl();
     /**
      * 添加审核记录
      * @param reviewrecord
@@ -11,7 +13,7 @@ public class ReviewrecordBizImpl implements IReviewrecordBiz {
      */
     @Override
     public int addReviewrecord(Reviewrecord reviewrecord) {
-        return 0;
+        return reviewrecordDao.insertReviewrecord(reviewrecord);
     }
 
     /**
@@ -21,6 +23,6 @@ public class ReviewrecordBizImpl implements IReviewrecordBiz {
      */
     @Override
     public Reviewrecord getReviewrecord(int ticketId) {
-        return null;
+        return reviewrecordDao.queryReviewrecord(ticketId);
     }
 }

@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/es")
-
-@WebServlet("/es")
 public class EnterpriseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

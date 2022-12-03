@@ -1,6 +1,7 @@
 package com.jr.server;
 
 import com.google.gson.Gson;
+import com.jr.biz.impl.EnterpriseBizImpl;
 import com.jr.biz.impl.TicketopenBizImpl;
 import com.jr.biz.impl.ViewOpenInfoBizImpl;
 import com.jr.util.PageHelper;
@@ -24,6 +25,8 @@ public class TicketOpenServlet extends HttpServlet {
             getAllTicketopeninfo(request, response);
         }else if (num.equals("2")){
             getTicketopeninfoByconditions(request, response);
+        }else if (num.equals("3")){
+            enterprisequery(request, response);
         }
 
     }
@@ -77,6 +80,7 @@ public class TicketOpenServlet extends HttpServlet {
         pageHelper.setPageList(viewOpenInfoBiz.getAllInfoByCurrentPage(pageHelper,str));
         Gson gson=new Gson();
         response.getWriter().println(gson.toJson(pageHelper));
+
     }
 /**
  * 获取所有符合条件的ticketopen开单表信息
@@ -118,4 +122,12 @@ public class TicketOpenServlet extends HttpServlet {
         Gson gson=new Gson();
         response.getWriter().println( gson.toJson(pageHelper));
     }
+    protected void enterprisequery(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+        //获得企业表的信息，将企业信息传送到前端页面进行展示；
+        EnterpriseBizImpl enterpriseBiz=new EnterpriseBizImpl();
+        List list=enterpriseBiz.getAllEnterpriseNames();
+        Gson gson=new Gson();
+        response.getWriter().println(gson.toJson(list));
+    }
 }
+

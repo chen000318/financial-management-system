@@ -17,9 +17,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("[name='voucher number']").blur(function () {
-                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+"&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
-                    "&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
+                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
                 $.get("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
@@ -38,11 +41,22 @@
                         $(obj).appendTo($("[name='showtable']"));
                     }
                 })
+            })
+            $.get("tos","i=3",function (str) {
+                $("[name='acquired enterprise']")[0].options.length=1;
+                eval("var list="+str)
+                for(var i=0;i<list.length;i++){
+                    var obj="<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+                    $(obj).appendTo("[name='acquired enterprise']");
+                }
             })
             $("[name='acquired enterprise']").change(function () {
-                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+"&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
-                    "&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
+                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
                 $.get("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
@@ -62,10 +76,21 @@
                     }
                 })
             })
+            $.get("tos","i=3",function (str) {
+                $("[name='enterprise billing']")[0].options.length=1;
+                eval("var list="+str)
+                for(var i=0;i<list.length;i++){
+                    var obj="<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+                    $(obj).appendTo("[name='enterprise billing']");
+                }
+            })
             $("[name='enterprise billing']").change(function () {
-                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+"&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
-                    "&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
+                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
                 $.get("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
@@ -86,9 +111,12 @@
                 })
             })
             $("[name='billing date']").change(function () {
-                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+"&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
-                    "&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
+                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
                 $.get("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
@@ -109,9 +137,12 @@
                 })
             })
             $("[name='minimum amount']").blur(function() {
-                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+"&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
-                    "&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
+                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
                 $.get("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
@@ -133,9 +164,12 @@
                 })
             })
             $("[name='maximum amount']").blur(function () {
-                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+"&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
-                    "&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
+                var url = "i=2&vouchernumber="+$("[name='voucher number']").val()+
+                             "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                             "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                             "&billingdate="+$("[name='billing date']").val()+
+                             "&minimum="+$("[name='minimum amount']").val()+
+                             "&maximum="+$("[name='maximum amount']").val();
                 $.get("tos",url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
@@ -264,7 +298,7 @@
                         <div class="am-form-group">
                             <span style="font-size: 14px;">收单企业</span>
                             <select data-am-selected="{btnSize: 'sm'}" name="acquired enterprise">
-                                <option value="">请选择收单企业</option>
+                                <option value="null">请选择收单企业</option>
                                 <option value="a">百度科技有限公司</option>
                                 <option value="b">京东集团</option>
                                 <option value="c">小米</option>
@@ -275,7 +309,7 @@
                         <div class="am-form-group">
                             <span style="font-size: 14px;">开单企业</span>
                             <select class="am-form-field" data-am-selected="{btnSize: 'sm'}" name="enterprise billing">
-                                <option value="">请选择开单企业</option>
+                                <option value="null">请选择开单企业</option>
                                 <option value="a">腾讯科技有限公司</option>
                                 <option value="b">隆基股份有限公司</option>
                             </select>
