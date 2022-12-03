@@ -15,7 +15,7 @@ public class EnterpriseBizImpl implements IEnterpriseBiz {
     }
 
     /*
-     *获取所有企业名称
+     *获取所有企业信息
      * */
     @Override
     public List<Enterprise> getAllEnterpriseNames() {

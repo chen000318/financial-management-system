@@ -2,6 +2,9 @@ package com.jr.util;
 
 import java.util.Date;
 
+/**
+ * 此类为工具类，用于查询开单视图内的内容
+ */
 public class ViewOpenInfo {
     private String no;                      //凭证编号
     private String aname;                   //收单企业名称

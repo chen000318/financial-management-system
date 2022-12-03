@@ -11,7 +11,7 @@ public interface IEnterpriseBiz {
     public Enterprise getEnterpriseInfo(int uid);
 
     /*
-    *获取所有企业名称
+    *获取所有企业信息
     * */
     public List<Enterprise> getAllEnterpriseNames();
 

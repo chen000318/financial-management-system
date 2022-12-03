@@ -7,7 +7,7 @@ import java.util.List;
 
 public class EnterpriseDaoImpl implements IEnterpriseDao {
     /*
-     * 根据企业id查询企业信息
+     * 根据用户id查询企业信息
      * */
     @Override
     public Enterprise queryByUid(int uid) {
@@ -15,7 +15,7 @@ public class EnterpriseDaoImpl implements IEnterpriseDao {
     }
 
     /*
-     *查询所有企业名称
+     *查询所有企业信息
      * */
     @Override
     public List<Enterprise> queryAllEnterpriseNames() {

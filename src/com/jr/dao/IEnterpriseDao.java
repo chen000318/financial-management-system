@@ -11,7 +11,7 @@ public interface IEnterpriseDao {
     public Enterprise queryByUid(int uid);
 
     /*
-     *查询所有企业名称
+     *查询所有企业信息
      * */
     public List<Enterprise> queryAllEnterpriseNames();
 
