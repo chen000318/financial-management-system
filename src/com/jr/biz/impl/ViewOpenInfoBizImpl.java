@@ -10,6 +10,14 @@ import java.util.List;
 public class ViewOpenInfoBizImpl implements IViewOpenInfoBiz {
     ViewOpenInfoDaoImpl viewOpenInfoDao=new ViewOpenInfoDaoImpl();
     /**
+     * 根据条件查询数据总条数
+     */
+    @Override
+    public int getTotalNumByConditions(String str) {
+        return viewOpenInfoDao.queryTotalNumByConditions(str);
+    }
+
+    /**
      * 获取查询数据的总条数
      */
     @Override

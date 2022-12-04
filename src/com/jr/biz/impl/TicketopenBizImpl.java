@@ -19,9 +19,9 @@ public class TicketopenBizImpl implements ITicketopenBiz {
      * @return
      */
     @Override
-    public int addTicket(Ticketopen ticketopen) {
+    public boolean addTicket(Ticketopen ticketopen) {
 
-        return ticketOpenDao.insertTicket(ticketopen);
+        return ticketOpenDao.insertTicket(ticketopen)>0?true:false;
     }
 
     /**

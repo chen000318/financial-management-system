@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface IViewOpenInfoBiz {
     /**
+     * 根据条件获取数据总条数
+     */
+    public int getTotalNumByConditions(String str);
+
+
+    /**
      * 获取查询数据的总条数
      */
     public int getTotalNum();

@@ -81,28 +81,17 @@
             })
 
 
-            // $("#submitBtn").click(function () {
-            //     document.getElementsByClassName("am-form am-form-horizontal").action="tos";
-            //     document.getElementsByClassName("am-form am-form-horizontal").method="get";
-            //     for(var i=0;i<document.getElementsByClassName("am-form am-form-horizontal").length-1;i++){
-            //         document.getElementsByClassName("am-form am-form-horizontal")[i].submit();
-            //     }
-            // })
             var mydate = new Date();
             document.getElementById("billdate").value=mydate.getFullYear()+"-"+(mydate.getMonth()+1)+"-"+mydate.getDate();
 
         })
 
         function submit() {
-            alert($("[name='amount']").val());
             $.ajax({
                 url : "tos?i=6&acquirer_enterprise_id="+$("[name='select1']").val()+"&amount="+$("[name='amount']").val()+
                 "&instiuty_name="+$("[name='select2']").val()+"&creat_time="+$("[name='creat_time']").val()+"&expiry_time="+$("[name='expiry_time']").val()+
                 "&payment_interest_type="+$("[name='select3']").val()+"&ticketRemark="+$("[name='ticketRemark']").val(),
-                type : "get",
-                success:function () {
-                    window.location.replace("tos")
-                }
+                type : "get"
             })
         }
 

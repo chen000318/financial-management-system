@@ -17,131 +17,44 @@
     <script src="assets/js/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         var butt=null;
-        $(document).on("click","button",function () {
-            butt = $(this).val();
-            var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+        var i=0;
+        //分页功能
+        function page() {
+            $("[name='page_li']").remove();
+            var url = "&vouchernumber="+$("[name='voucher number']").val()+
                 "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
                 "&enterprisebilling="+$("[name='enterprise billing']").val()+
                 "&billingdate="+$("[name='billing date']").val()+
-                "&button="+$(this).val()+
+                "&button="+butt+
                 "&minimum="+$("[name='minimum amount']").val()+
                 "&maximum="+$("[name='maximum amount']").val();
-            $.get("tos",url,function (str) {
+
+            $.post("tos","i=1"+url,function (str) {
                 eval("var pageHelper="+str);
-                $("[id='doc-modal-list']").empty();
-                for(var i=0;i<pageHelper.pageList.length;i++){
-                    var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-                    var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a>":
-                        (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a >撤销</a>":
-                            (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-                                "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
-                    var obj="<tr>" +
-                        "<td>"+pageHelper.pageList[i].no+"</td>" +
-                        "<td>"+pageHelper.pageList[i].aname+"</td>" +
-                        "<td>"+pageHelper.pageList[i].amount+"</td>" +
-                        "<td>"+pageHelper.pageList[i].ename+"</td>" +
-                        "<td>"+pageHelper.pageList[i].iname+"</td>" +
-                        "<td>"+pageHelper.pageList[i].createTime+"</td>" +
-                        "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
-                        "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
-                        "<td>"+a+"</td>"+
-                        "<td>"+b+"</td>"+
-                        "</tr>";
-                    $(obj).appendTo($("[name='showtable']"));
-                }
-            })
-        })
-        $(document).ready(function () {
-            $.post("tos","i=1",function (str) {
-                eval("var pageHelper="+str);
-                alert(pageHelper.totalPage);
                 if(pageHelper.totalPage>5){
                     for (var i=5;i>=2;i--){
-                        $("[name='page']").after("<li><a value="+i+">"+i+"</a></li>")
+                        $("[name='page']").after("<li name='page_li'><a value="+i+">"+i+"</a></li>");
                     }
                 }else {
-                    for (var i=pageHelper.totalPage;i>=2;i--){
-                        $("[name='page']").after("<li><a value="+i+">"+i+"</a></li>")
+                    for (var i=pageHelper.totalPage;i>=1;i--){
+                        $("[name='page']").after("<li name='page_li'><a value="+i+">"+i+"</a></li>");
                     }
                 }
 
             })
-            $("[name='voucher number']").blur(function () {
-                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
-                    "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+
-                    "&billingdate="+$("[name='billing date']").val()+
-                    "&button="+butt+
-                    "&minimum="+$("[name='minimum amount']").val()+
-                    "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
-                    eval("var pageHelper="+str);
-                    $("[id='doc-modal-list']").empty();
-                    for(var i=0;i<pageHelper.pageList.length;i++){
-                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a >撤销</a>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
-                        var obj="<tr>" +
-                            "<td>"+pageHelper.pageList[i].no+"</td>" +
-                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
-                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
-                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
-                            "<td>"+a+"</td>"+
-                            "<td>"+b+"</td>"+
-                            "</tr>";
-                        $(obj).appendTo($("[name='showtable']"));
-                    }
-                })
-            })
-            $.get("tos","i=3",function (str) {
-                $("[name='acquired enterprise']")[0].options.length=1;
-                eval("var list="+str)
-                for(var i=0;i<list.length;i++){
-                    var obj="<option value='"+list[i].id+"'>"+list[i].name+"</option>";
-                    $(obj).appendTo("[name='acquired enterprise']");
-                }
-            })
+        }
+        function pre(){
+            alert(-1);
+        }
 
-            $("[name='acquired enterprise']").change(function () {
-                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
-                    "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+
-                    "&billingdate="+$("[name='billing date']").val()+
-                    "&button="+butt+
-                    "&minimum="+$("[name='minimum amount']").val()+
-                    "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
-                    eval("var pageHelper="+str);
-                    $("[id='doc-modal-list']").empty();
-                    for(var i=0;i<pageHelper.pageList.length;i++){
-                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a >撤销</a>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
-                        var obj="<tr>" +
-                            "<td>"+pageHelper.pageList[i].no+"</td>" +
-                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
-                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
-                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
-                            "<td>"+a+"</td>"+
-                            "<td>"+b+"</td>"+
-                            "</tr>";
-                        $(obj).appendTo($("[name='showtable']"));
-                    }
-                })
-            })
-            $.get("tos","i=3",function (str) {
+        function nex(){
+            alert(1);
+        }
+
+        $(document).ready(function () {
+
+            //加载开单企业列表
+            $.post("tos","i=3",function (str) {
                 $("[name='enterprise billing']")[0].options.length=1;
                 eval("var list="+str)
                 for(var i=0;i<list.length;i++){
@@ -149,183 +62,169 @@
                     $(obj).appendTo("[name='enterprise billing']");
                 }
             })
+
+            //加载收单企业列表
+            $.post("tos","i=3",function (str) {
+                $("[name='acquired enterprise']")[0].options.length=1;
+                eval("var list="+str)
+                for(var i=0;i<list.length;i++){
+                    var obj="<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+                    $(obj).appendTo("[name='acquired enterprise']");
+                }
+            })
+            //获取总页数进行分页
+            $.post("tos","i=1",function (str) {
+                eval("var pageHelper="+str);
+                if(pageHelper.totalPage>5){
+                    for (var i=5;i>=2;i--){
+                        $("[name='page']").after("<li name='page_li'><a value="+i+">"+i+"</a></li>")
+                    }
+                }else {
+                    for (var i=pageHelper.totalPage;i>=1;i--){
+                        $("[name='page']").after("<li name='page_li'><a value="+i+">"+i+"</a></li>")
+                    }
+                }
+
+            })
+
+            //提交请求函数
+            post1 = function(){
+                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                    "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
+                    "&enterprisebilling="+$("[name='enterprise billing']").val()+
+                    "&billingdate="+$("[name='billing date']").val()+
+                    "&button="+butt+
+                    "&minimum="+$("[name='minimum amount']").val()+
+                    "&maximum="+$("[name='maximum amount']").val();
+                $.post("tos",url,function (str) {
+                    eval("var pageHelper="+str);
+                    $("[id='doc-modal-list']").empty();
+                    for(var i=0;i<pageHelper.pageList.length;i++){
+                        var a = pageHelper.pageList[i].status=="A"?"<span class=\"ele-dot-status ele-dot-status-success\"><span>\n" +
+                            "                                       <span class=\"ele-dot-text\" style=\"width: 80px;\">成功</span>":
+                            (pageHelper.pageList[i].status=="B"?"<span class=\"ele-dot-status ele-dot-status-info\"><span>\n" +
+                                "                                    <span class=\"ele-dot-text\" style=\"width: 80px;\">开单中</span>":
+                                (pageHelper.pageList[i].status=="C"?"<span class=\"ele-dot-status ele-dot-status-error\"><span>\n" +
+                                    "                                <span class=\"ele-dot-text\" style=\"width: 80px;\">已撤销</span>":
+                                    "<span class=\"ele-dot-status ele-dot-status-error\"><span>\n" +
+                                    " <span class=\"ele-dot-text\" style=\"width: 80px;\">复核未通过</span>"));
+
+
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>" +
+                            "<span class=\"am-text-secondary\"\n" + "style=\"cursor:pointer\"><span></span>详情</span></a>":
+                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                "style=\"cursor:pointer\"><span></span>详情</span></a> " + "<span class=\"am-text-secondary am-icon\"\n" + "style=\"cursor:pointer\"><span></span>撤销</span>":
+                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>重新申请</span></a>":
+                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>重新申请</span></a>"));
+                        var obj="<tr data-id='2'>" +
+                            "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].no+"</td>" +
+                            "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].aname+"</td>" +
+                            "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].amount+"</td>" +
+                            "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].ename+"</td>" +
+                            "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].iname+"</td>" +
+                            "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].createTime+"</td>" +
+                            "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].expiryTime+"</td>" +
+                            "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
+                            "<td class='am-hide-sm-only'>"+a+"</td>"+
+                            "<td>"+b+"</td>"+
+                            "</tr>";
+                        $(obj).appendTo($("[name='showtable']"));
+
+                    }
+                })
+            }
+
+            /**
+             * 这里存在问题
+             */
+            //加载收单企业列表信息
+            $("[name='acquired enterprise']").change(function () {
+                if(i<2){
+                    post1();
+                    i++;
+                }else {
+                    post1();
+                    page();
+                }
+            })
+
+            //加载开单企业列表信息
             $("[name='enterprise billing']").change(function () {
-                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
-                    "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+
-                    "&billingdate="+$("[name='billing date']").val()+
-                    "&button="+butt+
-                    "&minimum="+$("[name='minimum amount']").val()+
-                    "&maximum="+$("[name='maximum amount']").val();
-
-                $.get("tos",url,function (str) {
-                    eval("var pageHelper="+str);
-                    $("[id='doc-modal-list']").empty();
-                    for(var i=0;i<pageHelper.pageList.length;i++){
-                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a >撤销</a>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
-                        var obj="<tr>" +
-                            "<td>"+pageHelper.pageList[i].no+"</td>" +
-                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
-                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
-                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
-                            "<td>"+a+"</td>"+
-                            "<td>"+b+"</td>"+
-                            "</tr>";
-                        $(obj).appendTo($("[name='showtable']"));
-                    }
-                })
+                if(i<2){
+                    post1();
+                    i++;
+                }else {
+                    post1();
+                    page();
+                }
             })
+
+            //凭证编号输入框改变触发事件
+            $("[name='voucher number']").blur(function () {
+                post1();
+                page();
+            })
+
+            //时间改变触发事件
             $("[name='billing date']").change(function () {
-                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
-                    "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+
-                    "&billingdate="+$("[name='billing date']").val()+
-                    "&button="+butt+
-                    "&minimum="+$("[name='minimum amount']").val()+
-                    "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
-                    eval("var pageHelper="+str);
-                    $("[id='doc-modal-list']").empty();
-                    for(var i=0;i<pageHelper.pageList.length;i++){
-                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a >撤销</a>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
-                        var obj="<tr>" +
-                            "<td>"+pageHelper.pageList[i].no+"</td>" +
-                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
-                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
-                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
-                            "<td>"+a+"</td>"+
-                            "<td>"+b+"</td>"+
-                            "</tr>";
-                        $(obj).appendTo($("[name='showtable']"));
-                    }
-                })
+                post1();
+                page();
             })
-            // $("[name='divbutton']>button").click(function () {
-            //     var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+"&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-            //         "&enterprisebilling="+$("[name='enterprise billing']").val()+"&billingdate="+$("[name='billing date']").val()+
-            //         "&button="+$("[name='divbutton']>button").val()+"&minimum="+$("[name='minimum amount']").val()+"&maximum="+$("[name='maximum amount']").val();
-            //     alert($("[name='divbutton']>button").val());
-            //     $.get("tos",url,function (str) {
-            //         eval("var pageHelper="+str);
-            //         $("[id='doc-modal-list']").empty();
-            //         for(var i=0;i<pageHelper.pageList.length;i++){
-            //             var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-            //             var b = pageHelper.pageList[i].status=="A"?"<a href='open-detail.jsp'>详情</a>":
-            //                    (pageHelper.pageList[i].status=="B"?"<a href='open-detail.jsp'>详情</a> <a >撤销</a>":
-            //                    (pageHelper.pageList[i].status=="C"?"<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-            //                         "<a href='open-detail.jsp'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
-            //             var obj="<tr>" +
-            //                 "<td>"+pageHelper.pageList[i].no+"</td>" +
-            //                 "<td>"+pageHelper.pageList[i].aname+"</td>" +
-            //                 "<td>"+pageHelper.pageList[i].amount+"</td>" +
-            //                 "<td>"+pageHelper.pageList[i].ename+"</td>" +
-            //                 "<td>"+pageHelper.pageList[i].iname+"</td>" +
-            //                 "<td>"+pageHelper.pageList[i].createTime+"</td>" +
-            //                 "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
-            //                 "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
-            //                 "<td>"+a+"</td>"+
-            //                 "<td>"+b+"</td>"+
-            //                 "</tr>";
-            //             $(obj).appendTo("table");
-            //         }
-            //     })
-            // })
+
+            //最小值输入框失去焦点触发事件
             $("[name='minimum amount']").blur(function() {
-                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
-                    "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
-                    "&enterprisebilling="+$("[name='enterprise billing']").val()+
-                    "&billingdate="+$("[name='billing date']").val()+
-                    "&button="+butt+
-                    "&minimum="+$("[name='minimum amount']").val()+
-                    "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
-                    eval("var pageHelper="+str);
-                    $("[id='doc-modal-list']").empty();
-                    for(var i=0;i<pageHelper.pageList.length;i++){
-                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a >撤销</a>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
-                        var obj="<tr>" +
-                            "<td>"+pageHelper.pageList[i].no+"</td>" +
-                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
-                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
-                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
-                            "<td>"+a+"</td>"+
-                            "<td>"+b+"</td>"+
-                            "</tr>";
-                        $(obj).appendTo($("[name='showtable']"));
-
-                    }
-                })
+                post1();
+                page();
             })
+
+            //最大值输入框失去焦点触发事件
             $("[name='maximum amount']").blur(function () {
-                var url = "i=1&vouchernumber="+$("[name='voucher number']").val()+
+                post1();
+                page();
+            })
+
+            //分页按钮点击触发事件
+            $(document).on("click","a",function () {
+                var url = "&vouchernumber="+$("[name='voucher number']").val()+
                     "&acquiredenterprise="+$("[name='acquired enterprise']").val()+
                     "&enterprisebilling="+$("[name='enterprise billing']").val()+
                     "&billingdate="+$("[name='billing date']").val()+
                     "&button="+butt+
                     "&minimum="+$("[name='minimum amount']").val()+
                     "&maximum="+$("[name='maximum amount']").val();
-                $.get("tos",url,function (str) {
-                    eval("var pageHelper="+str);
-                    $("[id='doc-modal-list']").empty();
-                    for(var i=0;i<pageHelper.pageList.length;i++){
-                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a >撤销</a>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
-                        var obj="<tr>" +
-                            "<td>"+pageHelper.pageList[i].no+"</td>" +
-                            "<td>"+pageHelper.pageList[i].aname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].amount+"</td>" +
-                            "<td>"+pageHelper.pageList[i].ename+"</td>" +
-                            "<td>"+pageHelper.pageList[i].iname+"</td>" +
-                            "<td>"+pageHelper.pageList[i].createTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].expiryTime+"</td>" +
-                            "<td>"+pageHelper.pageList[i].upLinkAddress+"</td>" +
-                            "<td>"+a+"</td>"+
-                            "<td>"+b+"</td>"+
-                            "</tr>";
-                        $(obj).appendTo($("[name='showtable']"));
-                    }
-                })
-            })
-            $(document).on("click","a",function () {
-
                 var val=$(this)[0].getAttribute("value");
 
-                $.get("tos","i=1&index="+val,function (str) {
+                //添加选中类样式：
+                $("[class='am-active']").removeClass("am-active");
+                $(this).parent().addClass("am-active");
+
+                $.post("tos","i=1&index="+val+url,function (str) {
                     eval("var pageHelper="+str);
                     $("[id='doc-modal-list']").empty();
                     for(var i=0;i<pageHelper.pageList.length;i++){
-                        var a = pageHelper.pageList[i].status=="A"?"成功":(pageHelper.pageList[i].status=="B"?"开单中": (pageHelper.pageList[i].status=="C"?"已撤销":"复核未通过"));
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a >撤销</a>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>详情</a> <a href='ticket-open.jsp'>重新申请</a>"));
+                        var a = pageHelper.pageList[i].status=="A"?"<span class=\"ele-dot-status ele-dot-status-success\"><span>\n" +
+                            "                                       <span class=\"ele-dot-text\" style=\"width: 80px;\">成功</span>":
+                            (pageHelper.pageList[i].status=="B"?"<span class=\"ele-dot-status ele-dot-status-info\"><span>\n" +
+                                "                                    <span class=\"ele-dot-text\" style=\"width: 80px;\">开单中</span>":
+                                (pageHelper.pageList[i].status=="C"?"<span class=\"ele-dot-status ele-dot-status-error\"><span>\n" +
+                                    "                                <span class=\"ele-dot-text\" style=\"width: 80px;\">已撤销</span>":
+                                    "<span class=\"ele-dot-status ele-dot-status-error\"><span>\n" +
+                                    " <span class=\"ele-dot-text\" style=\"width: 80px;\">复核未通过</span>"));
+
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>" +
+                            "<span class=\"am-text-secondary\"\n" + "style=\"cursor:pointer\"><span></span>详情</span></a>":
+                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                "style=\"cursor:pointer\"><span></span>详情</span></a> " + "<span class=\"am-text-secondary am-icon\"\n" + "style=\"cursor:pointer\"><span></span>撤销</span>":
+                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>重新申请</span></a>":
+                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>重新申请</span></a>"));
                         var obj="<tr>" +
                             "<td>"+pageHelper.pageList[i].no+"</td>" +
                             "<td>"+pageHelper.pageList[i].aname+"</td>" +
@@ -342,11 +241,19 @@
                     }
                 });
             });
+
+
+        })
+        //状态改变按钮触发事件
+        $(document).on("click","button",function () {
+            butt = $(this).val();
+            post1();
+            page();
         })
 
     </script>
 </head>
-<body data-type="generalComponents">
+<body data-type="generalComponents" >
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
@@ -638,13 +545,13 @@
 
                             <div class="am-fr">
                                 <ul class="am-pagination tpl-pagination" id="page_ul">
-                                    <li class="am-disabled"><a href="#">«</a></li>
-                                    <li class="am-active" name="page"><a href="#" value="1">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">»</a></li>
+                                    <li onclick="pre();" name="page"><a href="#">«</a></li>
+<%--                                    <li class="am-active"><a href="#" value="1">1</a></li>--%>
+<%--                                    <li><a href="#">2</a></li>--%>
+<%--                                    <li><a href="#">3</a></li>--%>
+<%--                                    <li><a href="#">4</a></li>--%>
+<%--                                    <li><a href="#">5</a></li>--%>
+                                    <li onclick="nex();"><a href="#">»</a></li>
                                 </ul>
                             </div>
                         </div>

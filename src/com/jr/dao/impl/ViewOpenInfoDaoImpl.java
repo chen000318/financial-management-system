@@ -19,6 +19,31 @@ public class ViewOpenInfoDaoImpl implements IViewOpenInfoDao {
     PreparedStatement ps;
     ResultSet rs;
     /**
+     * 根据条件查询数据总条数
+     */
+    @Override
+    public int queryTotalNumByConditions(String str) {
+        int num = 0;
+        try {
+            String sql = "SELECT count(id) FROM openinfo WHERE id IS NOT NULL "+str;
+            con = DBHelper.getCon();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            rs.next();
+            num = rs.getInt("count(id)");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBHelper.closeAll(con,ps,rs);
+        }
+        return num;
+    }
+
+    /**
      * 查询数据的总条数
      */
     @Override

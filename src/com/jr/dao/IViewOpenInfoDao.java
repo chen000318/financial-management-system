@@ -7,6 +7,11 @@ import java.util.List;
 
 public interface IViewOpenInfoDao {
     /**
+     * 根据条件查询数据总条数
+     */
+    public int queryTotalNumByConditions(String str);
+
+    /**
      * 查询数据的总条数
      */
     public int queryTotalNum();

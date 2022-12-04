@@ -8,7 +8,7 @@ public interface ITicketopenBiz {
     /*
     * 添加开单信息
     * */
-    public int addTicket(Ticketopen ticketopen);
+    public boolean addTicket(Ticketopen ticketopen);
 
     /**
      * 更新开单状态

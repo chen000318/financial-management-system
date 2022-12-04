@@ -27,7 +27,7 @@ public class TicketOpenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String num=request.getParameter("i");
-        System.out.println(num);
+        System.out.println("我是i值："+num+"\n");
         if (num.equals("1")){
             getAllTicketOpenInfo(request, response);
         }
@@ -55,7 +55,7 @@ public class TicketOpenServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        doGet(req, resp);
     }
 
     @Override
@@ -75,18 +75,15 @@ public class TicketOpenServlet extends HttpServlet {
         ticketopen.setEnterPriseId(enterPriseId);
         ticketopen.setAcquirerEnterPriseId(request.getParameter("acquirer_enterprise_id"));
         ticketopen.setAmount(Double.parseDouble(request.getParameter("amount")));
-        System.out.println(request.getParameter("creat_time"));
         ticketopen.setInstitutyId(Integer.parseInt(request.getParameter("instiuty_name")));
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         ticketopen.setCreateTime(date.parse(request.getParameter("creat_time")));
         ticketopen.setExpiryTime(date.parse(request.getParameter("expiry_time")));
         ticketopen.setPaymentInterestType(request.getParameter("payment_interest_type"));
-        System.out.println(request.getParameter("payment_interest_type"));
         ticketopen.setStatus("B");
         ticketopen.setUplinkAddress(upLinkAddress());
         ticketopen.setTicketRemark(request.getParameter("ticketRemark"));
-        int i = ticketopenBiz.addTicket(ticketopen);
-        if (i!=1){
+        if (!ticketopenBiz.addTicket(ticketopen)){
             request.getRequestDispatcher("ticket-open.jsp").forward(request,response);
         }
     }
@@ -124,7 +121,7 @@ public class TicketOpenServlet extends HttpServlet {
             int i=Integer.parseInt(string);
             pageHelper.setIndexPage(i);
         }
-        pageHelper.setTotalCount(viewOpenInfoBiz.getTotalNum());//给  一共有多少条数据   赋值
+        pageHelper.setTotalCount(viewOpenInfoBiz.getTotalNumByConditions(str));//给  一共有多少条数据   赋值
         pageHelper.setPageSize(4);//给  每页显示的条数   赋值
         pageHelper.setPageList(viewOpenInfoBiz.getAllInfoByCurrentPage(pageHelper,str));
         pageHelper.setTotalPage();
