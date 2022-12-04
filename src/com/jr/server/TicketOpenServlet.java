@@ -8,6 +8,7 @@ import com.jr.util.PageHelper;
 import com.jr.util.SqlHelper;
 import com.jr.entry.Ticketopen;
 import com.jr.entry.User;
+import com.jr.util.ViewOpenInfo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,6 @@ public class TicketOpenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String num=request.getParameter("i");
-        System.out.println("我是i值："+num+"\n");
         if (num.equals("1")){
             getAllTicketOpenInfo(request, response);
         }
@@ -38,7 +38,7 @@ public class TicketOpenServlet extends HttpServlet {
             enterprisequery(request, response);
         }
         if(num.equals("4")){
-            System.out.println("我来了");
+            updateStatus(request,response);
         }
         if("5".equals(num)){
             getPayment(request,response);
@@ -49,6 +49,9 @@ public class TicketOpenServlet extends HttpServlet {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
+        if("7".equals(num)){
+            showTicketOpenInfo(request,response);
         }
 
     }
@@ -61,6 +64,48 @@ public class TicketOpenServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.service(req, resp);
+    }
+
+    /**
+     * 判断该订单是否属于已登录用户
+     */
+    protected boolean verify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String oid = request.getParameter("oid");
+        User user = (User) request.getSession().getAttribute("user");
+        TicketopenBizImpl ticketopenBiz = new TicketopenBizImpl();
+        String eid = String.valueOf(ticketopenBiz.getEnterpriseIdByOpenId(Integer.parseInt(oid)));
+        if(user.getEnterPriseId().equals(eid)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    /**
+     * 展示开具付款凭证信息(重新申请)
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void showTicketOpenInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String oid = request.getParameter("oid");
+        ViewOpenInfoBizImpl viewOpenInfoBiz = new ViewOpenInfoBizImpl();
+        ViewOpenInfo viewOpenInfo = viewOpenInfoBiz.getInfoById(Integer.parseInt(oid));
+        System.out.println(viewOpenInfo);
+        Gson gson = new Gson();
+        response.getWriter().println(gson.toJson(viewOpenInfo));
+
+    }
+
+    //更改票据状态
+    protected void updateStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String eid = request.getParameter("eid");
+        Ticketopen ticketopen = new Ticketopen();
+        ticketopen.setId(Integer.parseInt(eid));
+        TicketopenBizImpl ticketopenBiz = new TicketopenBizImpl();
+        ticketopenBiz.updateTicketopenStatus(ticketopen,"C");
+        response.sendRedirect("open-list.jsp");
     }
 
     /**
@@ -173,11 +218,12 @@ public class TicketOpenServlet extends HttpServlet {
             int i=Integer.parseInt(string);
             pageHelper.setIndexPage(i);
         }
-        pageHelper.setTotalCount(viewOpenInfoBiz.getTotalNum());//给  一共有多少条数据   赋值
+        pageHelper.setTotalCount(viewOpenInfoBiz.getTotalNumByStatus(str));//给  一共有多少条数据   赋值
         pageHelper.setPageSize(5);//给  每页显示的条数   赋值
         pageHelper.setPageList(viewOpenInfoBiz.getAllOnTheBillByCurrentPage(pageHelper,str));
+        pageHelper.setTotalPage();
         Gson gson=new Gson();
-        response.getWriter().println( gson.toJson(pageHelper));
+        response.getWriter().println(gson.toJson(pageHelper));
     }
 
     /**

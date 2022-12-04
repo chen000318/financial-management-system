@@ -20,6 +20,7 @@ public class EnterpriseDaoImpl implements IEnterpriseDao {
     PreparedStatement ps;
     ResultSet rs;
 
+
     /**
      * 根据用户id查询企业信息
      * */
@@ -78,8 +79,33 @@ public class EnterpriseDaoImpl implements IEnterpriseDao {
         return list;
     }
 
+    /**
+     * 根据企业id查询企业信息
+     */
+
     @Override
     public Enterprise queryEnterpriseInfoByid(int id) {
-        return null;
+        Enterprise enterprise = null;
+        try {
+            String sql = "SELECT name,social_uniform_code FROM t_enterprise  WHERE id=?";
+            con = DBHelper.getCon();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                enterprise = new Enterprise();
+                enterprise.setName(rs.getString(1));
+                enterprise.setSocialUniformCcode(rs.getString(2));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBHelper.closeAll(con,ps,rs);
+        }
+        return enterprise;
     }
 }

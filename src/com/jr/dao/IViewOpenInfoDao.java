@@ -1,5 +1,6 @@
 package com.jr.dao;
 
+import com.jr.entry.Ticketopen;
 import com.jr.util.PageHelper;
 import com.jr.util.ViewOpenInfo;
 
@@ -12,9 +13,9 @@ public interface IViewOpenInfoDao {
     public int queryTotalNumByConditions(String str);
 
     /**
-     * 查询数据的总条数
+     * 根据条件查询开单中状态的数据总条数
      */
-    public int queryTotalNum();
+    public int queryTotalNumByStatus(String str);
 
     /**
      * 查询当前页的数据信息(所有状态)
@@ -25,4 +26,10 @@ public interface IViewOpenInfoDao {
      * 查询当前页的复核信息(状态为开单中)
      */
     public List<ViewOpenInfo> queryAllOnTheBillByCurrentPage(PageHelper pageHelper,String str);
+
+    /**
+     * 根据开单id查询某一条信息
+     */
+    public ViewOpenInfo getInfoById(int id);
+
 }

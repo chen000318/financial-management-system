@@ -25,4 +25,6 @@ public class ReviewrecordBizImpl implements IReviewrecordBiz {
     public Reviewrecord getReviewrecord(int ticketId) {
         return reviewrecordDao.queryReviewrecord(ticketId);
     }
+
+
 }

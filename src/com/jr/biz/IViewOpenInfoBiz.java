@@ -1,5 +1,6 @@
 package com.jr.biz;
 
+import com.jr.entry.Ticketopen;
 import com.jr.util.PageHelper;
 import com.jr.util.ViewOpenInfo;
 
@@ -13,9 +14,9 @@ public interface IViewOpenInfoBiz {
 
 
     /**
-     * 获取查询数据的总条数
+     * 根据条件获取开单中状态的数据总条数
      */
-    public int getTotalNum();
+    public int getTotalNumByStatus(String str);
 
     /**
      * 获取当前页的全部信息(所有状态)
@@ -26,4 +27,9 @@ public interface IViewOpenInfoBiz {
      * 获取当前页的复核信息(状态为开单中)
      */
     public List<ViewOpenInfo> getAllOnTheBillByCurrentPage(PageHelper pageHelper,String str);
+
+    /**
+     * 根据开单id获取某一条信息
+     */
+    public ViewOpenInfo getInfoById(int id);
 }

@@ -5,8 +5,6 @@ import java.util.Date;
 public class
 Reviewrecord {
 
-    
-
     private int id;
     private int ticketOpenId;
     private int creatorId;

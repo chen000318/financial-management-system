@@ -14,17 +14,18 @@ public class ViewCheckInfo {
     private String asuc;                    //收单企业统一社会信用代码
     private double amount;                  //凭证金额
     private String iname;                   //金融机构名称
-    private Date createTime;                //开单时间
-    private Date expiryTime;                //到期时间
+    private String createTime;                //开单时间
+    private String expiryTime;                //到期时间
     private int timePoor;                   //时间差
     private String paymentInterestType;     //付息方式
     private String ticketRemark;            //开单备注
+    private String remark;                  //审核备注
     private String ticketOpenId;            //开单id
 
     public ViewCheckInfo() {
     }
 
-    public ViewCheckInfo(String no, String status, String ename, String esuc, String aname, String asuc, double amount, String iname, Date createTime, Date expiryTime, int timePoor, String paymentInterestType, String ticketRemark, String ticketOpenId) {
+    public ViewCheckInfo(String no, String status, String ename, String esuc, String aname, String asuc, double amount, String iname, String createTime, String expiryTime, int timePoor, String paymentInterestType, String ticketRemark, String remark, String ticketOpenId) {
         this.no = no;
         this.status = status;
         this.ename = ename;
@@ -38,7 +39,16 @@ public class ViewCheckInfo {
         this.timePoor = timePoor;
         this.paymentInterestType = paymentInterestType;
         this.ticketRemark = ticketRemark;
+        this.remark = remark;
         this.ticketOpenId = ticketOpenId;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public int getTimePoor() {
@@ -113,19 +123,19 @@ public class ViewCheckInfo {
         this.iname = iname;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getExpiryTime() {
+    public String getExpiryTime() {
         return expiryTime;
     }
 
-    public void setExpiryTime(Date expiryTime) {
+    public void setExpiryTime(String expiryTime) {
         this.expiryTime = expiryTime;
     }
 

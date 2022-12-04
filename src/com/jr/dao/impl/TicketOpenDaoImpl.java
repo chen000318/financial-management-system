@@ -20,17 +20,6 @@ public class TicketOpenDaoImpl implements ITicketOpenDao {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-    /*
-     * 查询符合条件的所有状态的开单信息（开单）
-     * 这里利用SqlHelper工具类返回的字符串进行查询
-     * where后面需要加上一个 id is not null
-     * */
-
-    /*
-     * 查询符合条件的开单中的开单信息（复核）
-     * 这里利用SqlHelper工具类返回的字符串进行查询
-     * where后面加上status='开单中'
-
 
     /*
      * 添加开单信息
@@ -49,13 +38,14 @@ public class TicketOpenDaoImpl implements ITicketOpenDao {
      * 根据开单id更改票据状态
      */
     @Override
-    public int alertTicketStatus(Ticketopen ticketopen) {
+    public int alertTicketStatus(Ticketopen ticketopen,String str) {
         int i=0;
         try {
             con=DBHelper.getCon();
-            String sql="UPDATE status FROM t_ticket_open WHERE id=?";
+            String sql="UPDATE t_ticket_open SET status=? WHERE id=?";
             ps=con.prepareStatement(sql);
-            ps.setObject(1,ticketopen.getId());
+            ps.setString(1,str);
+            ps.setInt(2,ticketopen.getId());
             i=ps.executeUpdate();
         } catch (IOException e) {
             e.printStackTrace();
@@ -109,6 +99,33 @@ public class TicketOpenDaoImpl implements ITicketOpenDao {
         try {
             con = DBHelper.getCon();
             ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()){
+                num = rs.getInt(1);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBHelper.closeAll(con,ps,rs);
+        }
+        return num;
+    }
+
+    /**
+     * 根据开单id查询企业id
+     */
+    @Override
+    public int queryEnterpriseIdByOpenId(int oid) {
+        String sql = "SELECT enterprise_id max FROM t_ticket_open WHERE id=?";
+        int  num = 0;
+        try {
+            con = DBHelper.getCon();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,oid);
             rs = ps.executeQuery();
             if (rs.next()){
                 num = rs.getInt(1);

@@ -8,15 +8,20 @@ import java.util.Date;
 public class ViewOpenInfo {
     private String no;                      //凭证编号
     private String aname;                   //收单企业名称
+    private String asuc;                    //收单企业社会代码
     private double amount;                  //凭证金额
     private String ename;                   //开单企业名称
+    private String esuc;                    //开单企业社会代码
+    private String iid;                     //金融机构id
     private String iname;                   //金融机构名称
     private String createTime;              //开单日期
+    private String payType;                 //付息方式
     private String expiryTime;              //到期日期
     private String upLinkAddress;           //上链地址
     private String status;                  //处理状态
     private String acquirerEnterpriseId;    //收单企业id
     private String enterPriseId;            //开单企业id
+    private String remark;                  //开单备注
     private String id;                      //开单id
 
     public ViewOpenInfo() {
@@ -35,6 +40,46 @@ public class ViewOpenInfo {
         this.acquirerEnterpriseId = acquirerEnterpriseId;
         this.enterPriseId = enterPriseId;
         this.id = id;
+    }
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
+    }
+
+    public String getAsuc() {
+        return asuc;
+    }
+
+    public void setAsuc(String asuc) {
+        this.asuc = asuc;
+    }
+
+    public String getEsuc() {
+        return esuc;
+    }
+
+    public void setEsuc(String esuc) {
+        this.esuc = esuc;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getNo() {

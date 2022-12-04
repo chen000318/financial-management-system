@@ -20,7 +20,7 @@ public class EnterpriseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer i = Integer.parseInt(request.getParameter("i"));
         if(i==1){
-            getEnterpriseInfoByEnterpriseID(request,response);
+            getEnterpriseInfoByUserID(request,response);
         }
         if(i==2){
             getAllEnterprise(request,response);
@@ -36,10 +36,21 @@ public class EnterpriseServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.service(req, resp);
     }
-/**
- *通过用户传入进来的企业ID获取企业信息，在填入
- * */
+    /**
+     * 根据企业id获取企业信息
+     */
     protected void getEnterpriseInfoByEnterpriseID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String eid = request.getParameter("eid");
+        EnterpriseBizImpl enterpriseBiz = new EnterpriseBizImpl();
+        Enterprise enterprise = enterpriseBiz.getEnterpriseInfoByid(Integer.parseInt(eid));
+        Gson gson = new Gson();
+        response.getWriter().println(gson.toJson(enterprise));
+    }
+
+/**
+ *通过用户ID获取企业信息，在填入
+ * */
+    protected void getEnterpriseInfoByUserID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user =(User) request.getSession().getAttribute("user");
         EnterpriseBizImpl enterpriseBiz = new EnterpriseBizImpl();
         Enterprise enterprise = enterpriseBiz.getEnterpriseInfo(user.getId());

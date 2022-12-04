@@ -30,8 +30,8 @@ public class TicketopenBizImpl implements ITicketopenBiz {
      * @return
      */
     @Override
-    public int updateTicketopenStatus(Ticketopen ticketopen) {
-        return ticketOpenDao.alertTicketStatus(ticketopen);
+    public int updateTicketopenStatus(Ticketopen ticketopen,String str) {
+        return ticketOpenDao.alertTicketStatus(ticketopen,str);
     }
 
     /**
@@ -43,8 +43,19 @@ public class TicketopenBizImpl implements ITicketopenBiz {
         return ticketOpenDao.selectMaxId();
     }
 
+    //获取所有付息方式
     @Override
     public List<Ticketopen> queryAllPayment() {
         return ticketOpenDao.selectAllPayment();
     }
+
+    /**
+     * 根据开单id获取企业id
+     */
+    @Override
+    public int getEnterpriseIdByOpenId(int oid) {
+        return ticketOpenDao.queryEnterpriseIdByOpenId(oid);
+    }
+
+
 }

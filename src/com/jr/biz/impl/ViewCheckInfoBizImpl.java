@@ -14,7 +14,15 @@ public class ViewCheckInfoBizImpl implements IViewCheckInfoBiz {
      * 通过开单id获取某单的详细信息
      * */
     @Override
-    public List<ViewCheckInfo> getDetails(Ticketopen ticketopen) {
+    public ViewCheckInfo getDetails(Ticketopen ticketopen) {
         return viewCheckInfoDao.queryDetails(ticketopen);
+    }
+
+    /**
+     * 通过开单id获取某单的详细信息(已审核)
+     */
+    @Override
+    public ViewCheckInfo getDetailsChecked(Ticketopen ticketopen) {
+        return viewCheckInfoDao.queryDetailsChecked(ticketopen);
     }
 }

@@ -14,6 +14,106 @@
     <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/app.css">
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //加载开单信息
+            var p="${pageContext.request.getParameter("p")}";
+            if(p=="1"){
+                $.post("vcs","i=2&eid=${pageContext.request.getParameter('eid')}",function (str) {
+                    eval("var viewCheck="+str);
+                    $("[name='no']").empty();
+                    $("[name='no']")[0].innerText=viewCheck.no;
+
+                    $("[name='e_status']").empty();
+                    $("[name='e_status']")[0].innerText="开单中";
+
+                    $("[name='ename']").empty();
+                    $("[name='ename']")[0].innerText=viewCheck.ename;
+
+                    $("[name='esuc']").empty();
+                    $("[name='esuc']")[0].innerText=viewCheck.esuc;
+
+                    $("[name='aname']").empty();
+                    $("[name='aname']")[0].innerText=viewCheck.aname;
+
+                    $("[name='asuc']").empty();
+                    $("[name='asuc']")[0].innerText=viewCheck.asuc;
+
+                    $("[name='amount']").empty();
+                    $("[name='amount']")[0].innerText=viewCheck.amount+"元";
+
+                    $("[name='iname']").empty();
+                    $("[name='iname']")[0].innerText=viewCheck.iname;
+
+                    $("[name='create_time']").empty();
+                    $("[name='create_time']")[0].innerText=viewCheck.createTime;
+
+                    $("[name='expiry_time']").empty();
+                    $("[name='expiry_time']")[0].innerText=viewCheck.expiryTime;
+
+                    $("[name='pay_type']").empty();
+                    $("[name='pay_type']")[0].innerText=viewCheck.paymentInterestType=="A"?"融资方付息":"核心企业付息";
+
+                    $("[name='ticket_remark']").empty();
+                    $("[name='ticket_remark']")[0].innerText=viewCheck.ticketRemark;
+
+
+
+                })
+            }else {
+                $.post("vcs","i=1&eid=${pageContext.request.getParameter('eid')}",function (str) {
+                    eval("var viewCheck="+str);
+                    $("[name='no']").empty();
+                    $("[name='no']")[0].innerText=viewCheck.no;
+
+                    $("[name='e_status']").empty();
+                    $("[name='e_status']")[0].innerText="开单中";
+
+                    $("[name='ename']").empty();
+                    $("[name='ename']")[0].innerText=viewCheck.ename;
+
+                    $("[name='esuc']").empty();
+                    $("[name='esuc']")[0].innerText=viewCheck.esuc;
+
+                    $("[name='aname']").empty();
+                    $("[name='aname']")[0].innerText=viewCheck.aname;
+
+                    $("[name='asuc']").empty();
+                    $("[name='asuc']")[0].innerText=viewCheck.asuc;
+
+                    $("[name='amount']").empty();
+                    $("[name='amount']")[0].innerText=viewCheck.amount+"元";
+
+                    $("[name='iname']").empty();
+                    $("[name='iname']")[0].innerText=viewCheck.iname;
+
+                    $("[name='create_time']").empty();
+                    $("[name='create_time']")[0].innerText=viewCheck.createTime;
+
+                    $("[name='expiry_time']").empty();
+                    $("[name='expiry_time']")[0].innerText=viewCheck.expiryTime;
+
+                    $("[name='pay_type']").empty();
+                    $("[name='pay_type']")[0].innerText=viewCheck.paymentInterestType=="A"?"融资方付息":"核心企业付息";
+
+                    $("[name='ticket_remark']").empty();
+                    $("[name='ticket_remark']")[0].innerText=viewCheck.ticketRemark;
+
+                    $("[name='check_remark']").empty();
+                    if(viewCheck.remark==undefined||viewCheck.remark.replace(/^\s*|\s*$/g,"")==""){
+                        $("[name='check_remark']")[0].innerText="并没有留下什么审核备注，同意就完事了";
+                    }else {
+                        $("[name='check_remark']")[0].innerText=viewCheck.remark;
+                    }
+
+
+
+                })
+            }
+
+        })
+    </script>
 </head>
 <body data-type="generalComponents">
 <header class="am-topbar am-topbar-inverse admin-header">
@@ -98,7 +198,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">凭证编号</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="no">
                                     N20220328000001
                                 </div>
                             </div>
@@ -108,7 +208,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">处理状态</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="e_status">
                                     开单中<span style="font-size: 12px;color: #999;margin-left: 5px;"> 内部复核中</span>
                                 </div>
                             </div>
@@ -118,7 +218,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">开单企业</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="ename">
                                     百度科技有限公司
                                 </div>
                             </div>
@@ -128,7 +228,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">统一社会信用代码</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="esuc">
                                     91110000802100XXXX
                                 </div>
                             </div>
@@ -138,7 +238,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">收单企业</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="aname">
                                     腾讯科技有限公司
                                 </div>
                             </div>
@@ -148,7 +248,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">统一社会信用代码</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="asuc">
                                     91110000802100AAAA
                                 </div>
                             </div>
@@ -158,7 +258,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">凭证金额</label>
-                                <div class="am-u-sm-9" style="font-size: 19px;color: red;font-weight: 500;">
+                                <div class="am-u-sm-9" style="font-size: 19px;color: red;font-weight: 500;" name="amount">
                                     10,000,000.00元
                                 </div>
                             </div>
@@ -168,7 +268,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">金融机构</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="iname">
                                     工商银行
                                 </div>
                             </div>
@@ -178,7 +278,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">开单日期</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="create_time">
                                     2021-03-28
                                 </div>
                             </div>
@@ -188,7 +288,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">到期日期</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="expiry_time">
                                     2021-04-28 <span style="font-size: 12px;color: #999">剩余 10 天</span>
                                 </div>
                             </div>
@@ -198,7 +298,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">付息方式</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="pay_type">
                                     融资企业付息
                                 </div>
                             </div>
@@ -208,7 +308,7 @@
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">备注</label>
-                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
+                                <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;" name="ticket_remark">
                                     备注信息备注信息备注信息备注信息备注信息备注信息备注信息
                                 </div>
                             </div>
@@ -238,7 +338,7 @@
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">备注</label>
                                 <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
-                                    <textarea disabled class="" rows="4" id="user-intro" placeholder="审核备注"></textarea>
+                                    <textarea disabled class="" rows="4" id="user-intro" placeholder="审核备注" name="check_remark"></textarea>
                                 </div>
                             </div>
                         </form>

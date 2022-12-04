@@ -9,5 +9,10 @@ public interface IViewCheckInfoDao {
     /**
      * 通过开单id查询某个开单的详细信息(利用视图工具类ViewCheckInfo)
      */
-    public List<ViewCheckInfo> queryDetails(Ticketopen ticketopen);
+    public ViewCheckInfo queryDetails(Ticketopen ticketopen);
+
+    /**
+     * 通过开单id查询某单的详细信息(已审核)
+     */
+    public ViewCheckInfo queryDetailsChecked(Ticketopen ticketopen);
 }

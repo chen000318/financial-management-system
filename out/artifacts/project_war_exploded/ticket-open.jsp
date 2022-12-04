@@ -75,7 +75,7 @@
             $.get("tos","i=5",function (list) {//加载后加载所有付息方式
                 eval("list3="+list);
                 for (var i = 0; i < list3.length; i++) {
-                    var obj="<option value='"+list3[i].paymentInterestType+"'>"+list3[i].paymentInterestType+"</option>";
+                    var obj="<option value='"+list3[i].paymentInterestType+"'>"+(list3[i].paymentInterestType=='A'?'融资方式付息':'核心企业付息')+"</option>";
                     $(obj).appendTo("[name='select3']");
                 }
             })
@@ -84,16 +84,41 @@
             var mydate = new Date();
             document.getElementById("billdate").value=mydate.getFullYear()+"-"+(mydate.getMonth()+1)+"-"+mydate.getDate();
 
+            var p =<%=request.getParameter("p")%>;
+            if(p == "1"){
+                $.get("tos","i=7&oid=${pageContext.request.getParameter('oid')}",function (str) {
+                    eval("var a="+str);
+
+                    $("[name='select1']").find("option[value="+a.acquirerEnterpriseId+"]").attr("selected",true);
+
+                    $("[name='amount']").val(a.amount);
+
+                    $("[name='instiuty_name']").find("option[value="+a.iid+"]").attr("selected",true);
+
+                    $("[name='create_time']").val(a.createTime);
+
+                    $("[name='expiry_time']").val(a.expiryTime);
+
+                    $("[name='payment_interest_type']").find("option[value="+a.payType+"]").attr("selected",true);
+
+                    $("[name='ticketRemark']").val(a.remark);
+                })
+            }
+
         })
+
+
 
         function submit() {
             $.ajax({
                 url : "tos?i=6&acquirer_enterprise_id="+$("[name='select1']").val()+"&amount="+$("[name='amount']").val()+
-                "&instiuty_name="+$("[name='select2']").val()+"&creat_time="+$("[name='creat_time']").val()+"&expiry_time="+$("[name='expiry_time']").val()+
+                "&instiuty_name="+$("[name='select2']").val()+"&creat_time="+$("[name='create_time']").val()+"&expiry_time="+$("[name='expiry_time']").val()+
                 "&payment_interest_type="+$("[name='select3']").val()+"&ticketRemark="+$("[name='ticketRemark']").val(),
                 type : "get"
             })
         }
+
+
 
 
     </script>
@@ -260,7 +285,7 @@
                                         <label for="user-name" class="am-u-sm-3 am-form-label star"> 开单日期</label>
                                         <div class="am-u-sm-9" style="margin-top: 4px;font-size: 16px;">
                                             <input disabled type="text" class="am-form-field" data-am-datepicker
-                                                    placeholder="&nbsp;&nbsp;请选择日期" id="billdate" name="creat_time"
+                                                    placeholder="&nbsp;&nbsp;请选择日期" id="billdate" name="create_time"
                                                    style="border: 1px solid #c2cad8;width: 100%;border-radius: 3px;">
                                         </div>
                                     </div>

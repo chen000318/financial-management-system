@@ -110,15 +110,16 @@
                                     " <span class=\"ele-dot-text\" style=\"width: 80px;\">复核未通过</span>"));
 
 
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>" +
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=2&eid="+pageHelper.pageList[i].id+"'>" +
                             "<span class=\"am-text-secondary\"\n" + "style=\"cursor:pointer\"><span></span>详情</span></a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
-                                "style=\"cursor:pointer\"><span></span>详情</span></a> " + "<span class=\"am-text-secondary am-icon\"\n" + "style=\"cursor:pointer\"><span></span>撤销</span>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
-                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp'><span class=\"am-text-secondary\"\n" +
+                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=2&p=1&eid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                "style=\"cursor:pointer\"><span></span>详情</span></a> " +
+                                "<span class=\"am-text-secondary am-icon\"\n" + "style=\"cursor:pointer\" onclick='return undo(str="+pageHelper.pageList[i].id+");'><span></span>撤销</span>":
+                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=2&eid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp?p=1&oid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
                                     "style=\"cursor:pointer\"><span></span>重新申请</span></a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
-                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp'><span class=\"am-text-secondary\"\n" +
+                                    "<a href='vcs?i=2&eid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp?p=1&oid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
                                     "style=\"cursor:pointer\"><span></span>重新申请</span></a>"));
                         var obj="<tr data-id='2'>" +
                             "<td class='am-hide-sm-only'>"+pageHelper.pageList[i].no+"</td>" +
@@ -141,7 +142,7 @@
             /**
              * 这里存在问题
              */
-            //加载收单企业列表信息
+            //收单企业列表改变触发事件
             $("[name='acquired enterprise']").change(function () {
                 if(i<2){
                     post1();
@@ -152,7 +153,7 @@
                 }
             })
 
-            //加载开单企业列表信息
+            ////开单企业列表改变触发事件
             $("[name='enterprise billing']").change(function () {
                 if(i<2){
                     post1();
@@ -215,15 +216,16 @@
                                     "<span class=\"ele-dot-status ele-dot-status-error\"><span>\n" +
                                     " <span class=\"ele-dot-text\" style=\"width: 80px;\">复核未通过</span>"));
 
-                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'>" +
+                        var b = pageHelper.pageList[i].status=="A"?"<a href='vcs?i=2&eid="+pageHelper.pageList[i].id+"'>" +
                             "<span class=\"am-text-secondary\"\n" + "style=\"cursor:pointer\"><span></span>详情</span></a>":
-                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
-                                "style=\"cursor:pointer\"><span></span>详情</span></a> " + "<span class=\"am-text-secondary am-icon\"\n" + "style=\"cursor:pointer\"><span></span>撤销</span>":
-                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
-                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp'><span class=\"am-text-secondary\"\n" +
+                            (pageHelper.pageList[i].status=="B"?"<a href='vcs?i=2&p=1&eid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                "style=\"cursor:pointer\"><span></span>详情</span></a> " +
+                                "<span class=\"am-text-secondary am-icon\"\n" + "style=\"cursor:pointer\" onclick='return undo(str="+pageHelper.pageList[i].id+");'><span></span>撤销</span>":
+                                (pageHelper.pageList[i].status=="C"?"<a href='vcs?i=2&eid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp?p=1&oid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
                                     "style=\"cursor:pointer\"><span></span>重新申请</span></a>":
-                                    "<a href='vcs?i=1&openid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
-                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp'><span class=\"am-text-secondary\"\n" +
+                                    "<a href='vcs?i=2&eid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
+                                    "style=\"cursor:pointer\"><span></span>详情</span></a> <a href='ticket-open.jsp?p=1&oid="+pageHelper.pageList[i].id+"'><span class=\"am-text-secondary\"\n" +
                                     "style=\"cursor:pointer\"><span></span>重新申请</span></a>"));
                         var obj="<tr>" +
                             "<td>"+pageHelper.pageList[i].no+"</td>" +
@@ -250,6 +252,15 @@
             post1();
             page();
         })
+
+        //撤销按钮触发函数
+        function undo(str) {
+            if(confirm("确定要撤销吗？")){
+                location.href="tos?i=4&eid="+str;
+            }else {
+                return false;
+            }
+        }
 
     </script>
 </head>

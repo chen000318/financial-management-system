@@ -41,7 +41,7 @@ public class UserServlet extends HttpServlet {
         User user1 = userBiz.login(user);
         if(user1!=null){
             request.getSession().setAttribute("user",user1);
-            response.sendRedirect("ticket-open.jsp");
+            response.sendRedirect("ticket-open.jsp?p=0");
         }else {
             response.getWriter().println("<script>alert('用户名或密码错误');location.href='login.jsp'</script>");
         }

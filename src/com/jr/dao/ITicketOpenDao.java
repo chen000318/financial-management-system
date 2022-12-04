@@ -14,7 +14,7 @@ public interface ITicketOpenDao {
     /**
      * 根据开单id更改票据状态
      */
-    public int alertTicketStatus(Ticketopen ticketopen);
+    public int alertTicketStatus(Ticketopen ticketopen,String str);
 
     /**
      * 根据开单表查询所有付息方式
@@ -27,7 +27,14 @@ public interface ITicketOpenDao {
     public int selectMaxId();
 
     /**
+     * 根据开单id查询企业id
+     */
+    public int queryEnterpriseIdByOpenId(int oid);
+
+    /**
      * 添加通用方法
      */
     public int upd(String sql,Object...objects);
+
+
 }

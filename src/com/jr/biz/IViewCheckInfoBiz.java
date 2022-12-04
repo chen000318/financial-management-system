@@ -9,5 +9,10 @@ public interface IViewCheckInfoBiz {
     /*
     * 通过开单id获取某单的详细信息
     * */
-    public List<ViewCheckInfo> getDetails(Ticketopen ticketopen);
+    public ViewCheckInfo getDetails(Ticketopen ticketopen);
+
+    /**
+     * 通过开单id获取某单的详细信息(已审核)
+     */
+    public ViewCheckInfo getDetailsChecked(Ticketopen ticketopen);
 }

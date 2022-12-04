@@ -26,7 +26,7 @@ public class EnterpriseBizImpl implements IEnterpriseBiz {
      */
     @Override
     public Enterprise getEnterpriseInfoByid(int id) {
-        return enterpriseDao.queryByUid(id);
+        return enterpriseDao.queryEnterpriseInfoByid(id);
     }
 
     /**
