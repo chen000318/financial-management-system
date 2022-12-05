@@ -256,12 +256,12 @@
         //撤销按钮触发函数
         function undo(str) {
             if(confirm("确定要撤销吗？")){
-                location.href="tos?i=4&eid="+str;
+                location.href="rs?i=1&status=D&eid="+str
+                    // location.href="tos?i=4&eid="+str;
             }else {
                 return false;
             }
         }
-
     </script>
 </head>
 <body data-type="generalComponents" >
@@ -270,7 +270,7 @@
         <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
             <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                 <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                    <span class="tpl-header-list-user-nick">禁言小张</span><span class="tpl-header-list-user-ico"> <img
+                    <span class="tpl-header-list-user-nick">第八小组</span><span class="tpl-header-list-user-ico"> <img
                         src="assets/img/user01.png"></span>
                 </a>
                 <ul class="am-dropdown-content">

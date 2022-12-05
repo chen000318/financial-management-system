@@ -26,7 +26,7 @@
                     $("[name='no']")[0].innerText=viewCheck.no;
 
                     $("[name='e_status']").empty();
-                    $("[name='e_status']")[0].innerText="开单中";
+                    $("[name='e_status']")[0].innerHTML="开单中"+"<span style='font-size: 12px;color: #999;margin-left: 5px;' > 内部复核中</span>";
 
                     $("[name='ename']").empty();
                     $("[name='ename']")[0].innerText=viewCheck.ename;
@@ -50,7 +50,7 @@
                     $("[name='create_time']")[0].innerText=viewCheck.createTime;
 
                     $("[name='expiry_time']").empty();
-                    $("[name='expiry_time']")[0].innerText=viewCheck.expiryTime;
+                    $("[name='expiry_time']")[0].innerHTML=viewCheck.expiryTime+"&nbsp;<span style='font-size: 12px;color: #999' >剩余 "+viewCheck.timePoor+" 天</span>";
 
                     $("[name='pay_type']").empty();
                     $("[name='pay_type']")[0].innerText=viewCheck.paymentInterestType=="A"?"融资方付息":"核心企业付息";
@@ -68,7 +68,7 @@
                     $("[name='no']")[0].innerText=viewCheck.no;
 
                     $("[name='e_status']").empty();
-                    $("[name='e_status']")[0].innerText="开单中";
+                    $("[name='e_status']")[0].innerText=viewCheck.status=="A"?"成功":(viewCheck.status=="C"?"已撤销":"复核未通过");
 
                     $("[name='ename']").empty();
                     $("[name='ename']")[0].innerText=viewCheck.ename;
@@ -92,7 +92,7 @@
                     $("[name='create_time']")[0].innerText=viewCheck.createTime;
 
                     $("[name='expiry_time']").empty();
-                    $("[name='expiry_time']")[0].innerText=viewCheck.expiryTime;
+                    $("[name='expiry_time']")[0].innerHTML=viewCheck.expiryTime+"&nbsp;<span style='font-size: 12px;color: #999' >剩余 "+viewCheck.timePoor+" 天</span>";
 
                     $("[name='pay_type']").empty();
                     $("[name='pay_type']")[0].innerText=viewCheck.paymentInterestType=="A"?"融资方付息":"核心企业付息";
@@ -121,7 +121,7 @@
         <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
             <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                 <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                    <span class="tpl-header-list-user-nick">禁言小张</span><span class="tpl-header-list-user-ico"> <img
+                    <span class="tpl-header-list-user-nick">第八小组</span><span class="tpl-header-list-user-ico"> <img
                         src="assets/img/user01.png"></span>
                 </a>
                 <ul class="am-dropdown-content">

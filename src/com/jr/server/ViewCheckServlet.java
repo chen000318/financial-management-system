@@ -70,6 +70,7 @@ public class ViewCheckServlet extends HttpServlet {
         Ticketopen ticketopen = new Ticketopen();
         ticketopen.setId(Integer.parseInt(eid));
         ViewCheckInfo viewCheckInfo = viewCheckInfoBiz.getDetailsChecked(ticketopen);
+        System.out.println(viewCheckInfo);
         Gson gson = new Gson();
         response.getWriter().println(gson.toJson(viewCheckInfo));
     }

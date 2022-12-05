@@ -59,9 +59,15 @@ public class ReviewrecordServlet extends HttpServlet {
         if("C".equals(status)){
             ticketopenBiz.updateTicketopenStatus(ticketopen,"D");
         }
-
+        if("D".equals(status)){
+            ticketopenBiz.updateTicketopenStatus(ticketopen,"C");
+            reviewrecord.setReviewStatus("C");
+        }
         ReviewrecordBizImpl reviewrecordBiz = new ReviewrecordBizImpl();
         reviewrecordBiz.addReviewrecord(reviewrecord);
+        if("D".equals(status)){
+            response.sendRedirect("open-list.jsp");
+        }
     }
 
 
